@@ -20,6 +20,22 @@ package com.cathive.sass;
  * @author Benjamin P. Jung
  */
 public enum SassSeparator {
-    SASS_COMMA,
-    SASS_SPACE
+
+    /** Comma (",") */
+    SASS_COMMA(','),
+
+    /** Space (" ") */
+    SASS_SPACE(' ');
+
+    /** Separator character primitive char value. */
+    private final char charValue;
+
+    private SassSeparator(final char charValue) {
+        this.charValue = charValue;
+    }
+
+    public char getCharValue() {
+        return this.charValue;
+    }
+
 }
