@@ -27,9 +27,11 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.google.common.collect.Lists.transform;
 import static java.util.Arrays.asList;
@@ -38,6 +40,9 @@ import static java.util.Arrays.asList;
  * @author Benjamin P. Jung
  */
 public class SassOptions {
+
+    /** Logger for this class. */
+    private static final Logger LOGGER = Logger.getLogger(SassOptions.class.getName());
 
     /** Underlying native options structure. */
     Sass_Options $options;
@@ -173,19 +178,19 @@ public class SassOptions {
         SassLibrary.INSTANCE.sass_option_set_include_path(this.$options, $include_path);
     }
 
-    public void clearIncludePath() {
-        SassLibrary.INSTANCE.sass_option_set_include_path(this.$options, (String) null);
+    public void setIncludePath(@Nonnull final Collection<Path> includePath) {
+        this.setIncludePath(includePath.toArray(new Path[includePath.size()]));
     }
 
-    public void setIncludePaths(@Nonnull final Collection<Path> includePath) {
-        this.setIncludePath(includePath.toArray(new Path[includePath.size()]));
+    public void clearIncludePath() {
+        SassLibrary.INSTANCE.sass_option_set_include_path(this.$options, (String) null);
     }
 
     @Nonnull
     public Collection<Path> getIncludePath() {
         final String includePathsAsString = SassLibrary.INSTANCE.sass_option_get_include_path(this.$options);
         if (includePathsAsString == null) {
-            return Collections.emptyList();
+            return new ArrayList<>();
         }
         return transform(Arrays.asList(includePathsAsString.split(File.pathSeparator)), new Function<String, Path>() {
             @Nullable
@@ -197,7 +202,18 @@ public class SassOptions {
     }
 
     public void pushIncludePath(@Nonnull final Path path) {
-        SassLibrary.INSTANCE.sass_option_push_include_path(this.$options, path.toUri().getPath());
+        this.pushIncludePath(path.toUri().getPath());
+    }
+
+    public void pushIncludePath(@Nonnull final String path) {
+        SassLibrary.INSTANCE.sass_option_push_include_path(this.$options, path);
+        // Error handling, because sass_push_include_path seems to be broken on libsass/SassC v3.1.0.
+        final Collection<Path> includePath = new ArrayList<>(this.getIncludePath());
+        if (!includePath.contains(Paths.get("path"))) {
+            LOGGER.log(Level.WARNING, "Could not push \"{0}\" to include paths. sass_option_push_include_path seems to be broken. Using workaround...", path);
+            includePath.add(Paths.get(path));
+            this.setIncludePath(includePath);
+        }
     }
 
     public void setSourceMapFile(@Nonnull final Path sourceMapFile) {
