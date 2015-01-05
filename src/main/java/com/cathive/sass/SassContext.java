@@ -44,7 +44,7 @@ public abstract class SassContext {
      * @param $context
      *     Native underlying Sass context.
      */
-    protected SassContext(final Sass_Context $context) {
+    protected SassContext(@Nonnull final Sass_Context $context) {
         super();
         this.$context = $context;
         this.options = new SassOptions(this);
