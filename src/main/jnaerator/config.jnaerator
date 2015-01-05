@@ -1,0 +1,11 @@
+-library sass
+-DLIBSASS_VERSION="3.1.0"
+-package org.libsass.sassc
+-I$(DIR)/../native/libsassh
+$(DIR)/../native/libsass/sass.h
+$(DIR)/../native/libsass/sass_context.h
+$(DIR)/../native/libsass/sass_values.h
+$(DIR)/../native/libsass/sass_functions.h
+-runtime JNA
+-beanStructs
+-preferJavac

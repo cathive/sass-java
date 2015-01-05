@@ -1,0 +1,24 @@
+# Mac OS X stuff
+.DS_Store
+
+# Windows stuff
+[Dd]esktop.ini
+[Tt]humbs.db
+
+# Build output
+bin/
+classes/
+target/
+out/
+test-output/
+
+# Unwanted eclipse files
+.settings/
+.project
+.classpath
+.factorypath
+.jsdtscope
+
+# Unwanted IntelliJ IDEA files
+.idea/
+*.iml

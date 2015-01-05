@@ -1,0 +1,16 @@
+$color-red: #ff0000;
+$color-green: #00ff00;
+$color-blue: #0000ff;
+
+.colorful-background {
+  .red {
+    background-color: $color-red;
+  }
+  .green {
+    background-color: $color-green;
+  }
+  .blue {
+    background-color: $color-blue;
+  }
+
+}
