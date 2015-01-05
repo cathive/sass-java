@@ -16,9 +16,14 @@
 
 package com.cathive.sass;
 
+import org.libsass.sassc.SassLibrary;
+
+import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Named;
 import javax.inject.Singleton;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * A service that can be used to compile .scss files.
@@ -28,14 +33,22 @@ import javax.inject.Singleton;
 @Singleton
 public class SassService {
 
+    /** Logger for this class. */
+    private static final Logger LOGGER = Logger.getLogger(SassService.class.getName());
+
     /**
      * Default constructor.
-     * <p>Creates a new libsass service instance.</p>
+     * <p>Creates a new Sass service instance.</p>
      */
     public SassService() {
         super();
     }
 
+
+    @PostConstruct
+    protected void initialize() {
+        LOGGER.log(Level.INFO, "Initializing libsass/SassC wrapper (libsass_version() -> \"{0}\")...", SassLibrary.INSTANCE.libsass_version());
+    }
 
     @PreDestroy
     protected void dispose() {
