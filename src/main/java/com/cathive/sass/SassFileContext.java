@@ -33,6 +33,11 @@ public class SassFileContext extends SassContext {
     /** Underlying native Sass file context. */
     protected Sass_File_Context $file_context;
 
+    /**
+     * Creates a new Sass file context.
+     * @param $file_context
+     *     Underlying native Sass_File_Context structure.
+     */
     protected SassFileContext(@Nonnull Sass_File_Context $file_context) {
         super(SassLibrary.INSTANCE.sass_file_context_get_context($file_context));
         this.$file_context = $file_context;

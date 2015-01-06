@@ -120,6 +120,17 @@ public class SassLibraryTest {
     public void testSimpleScssData() {
         final Sass_Data_Context dataContext = SassLibrary.INSTANCE.sass_make_data_context(ByteBuffer.wrap("html { background-color: red; }".getBytes(Charset.forName("UTF-8"))));
         final Sass_Context context = SassLibrary.INSTANCE.sass_data_context_get_context(dataContext);
+        final Sass_Options options = SassLibrary.INSTANCE.sass_data_context_get_options(dataContext);
+        SassLibrary.INSTANCE.sass_option_set_source_comments(options, (byte) 0);
+        SassLibrary.INSTANCE.sass_option_set_omit_source_map_url(options, (byte) 0);
+        SassLibrary.INSTANCE.sass_option_set_input_path(options, "/tmp/input/styles.scss");
+        SassLibrary.INSTANCE.sass_option_set_output_path(options, "/tmp/output");
+        SassLibrary.INSTANCE.sass_option_set_include_path(options, "/tmp/input");
+        SassLibrary.INSTANCE.sass_option_set_image_path(options, "/tmp/input");
+        SassLibrary.INSTANCE.sass_option_set_precision(options, 10);
+        SassLibrary.INSTANCE.sass_option_set_source_comments(options, (byte) 1);
+        SassLibrary.INSTANCE.sass_option_set_output_style(options, Sass_Output_Style.SASS_STYLE_NESTED);
+        SassLibrary.INSTANCE.sass_data_context_set_options(dataContext, options);
         final int compilerStatus = SassLibrary.INSTANCE.sass_compile_data_context(dataContext);
         try {
             if (compilerStatus != 0) {

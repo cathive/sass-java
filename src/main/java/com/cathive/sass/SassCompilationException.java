@@ -16,27 +16,64 @@
 
 package com.cathive.sass;
 
+import javax.annotation.Nonnull;
 import java.text.MessageFormat;
 
 /**
+ * Exception to be used when compilation of Sass contents fails.
  * @author Benjamin P. Jung
  */
 public class SassCompilationException extends RuntimeException {
 
+    /** @see java.io.Serializable */
+    private static final long serialVersionUID = 1L;
+
+    /** Numeric status code as returned by the libsass/SassC compiler. */
     private final int status;
+
+    /** Name of the input file that caused issues. */
     private final String fileName;
+
+    /** Line number of the input that caused the compilation error. */
     private final int line;
+
+    /** column number of the input that caused the compilation error. */
     private final int column;
+
+    /** JSON representation of the error message. */
     private final String json;
 
 
-    public SassCompilationException(final int status, final String message, final String fileName, final int line, final int column, final String json) {
+    /**
+     * Creates a new Sass compilation exception.
+     * @param status
+     *     Numeric status code as returned by the libsass/SassC compiler.
+     * @param message
+     *     Formatted humand-readable error message.
+     * @param fileName
+     *     Name of the input file that caused issues.
+     * @param line
+     *     Line number of the input that caused the compilation error.
+     * @param column
+     *     column number of the input that caused the compilation error.
+     * @param json
+     *     JSON representation of the error message.
+     */
+    public SassCompilationException(final int status,
+                                    @Nonnull final String message,
+                                    @Nonnull final String fileName,
+                                    final int line,
+                                    final int column,
+                                    @Nonnull final String json) {
+
         super(MessageFormat.format("[{0}:{1}:{2}] {3}", fileName, line, column, message));
+
         this.status = status;
         this.fileName = fileName;
         this.line = line;
         this.column = column;
         this.json = json;
+
     }
 
     public int getStatus() {

@@ -111,6 +111,8 @@ public class SassOptionsTest {
         options.clearIncludePath();
         assertEquals(0, options.getIncludePath().size());
 
+        // Source map file
+        options.setSourceMapFile("/tmp/source.map");
     }
 
 }

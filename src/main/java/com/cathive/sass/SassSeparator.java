@@ -34,7 +34,7 @@ public enum SassSeparator {
         this.charValue = charValue;
     }
 
-    public char getCharValue() {
+    char getCharValue() {
         return this.charValue;
     }
 

@@ -45,7 +45,7 @@ public class SassOptions {
     private static final Logger LOGGER = Logger.getLogger(SassOptions.class.getName());
 
     /** Underlying native options structure. */
-    Sass_Options $options;
+    protected Sass_Options $options;
 
     /**
      * Default constructor.
@@ -61,7 +61,7 @@ public class SassOptions {
      * @param context
      *     Sass context object to retrieve the options from.
      */
-    SassOptions(@Nonnull final SassContext context) {
+    protected SassOptions(@Nonnull final SassContext context) {
         this.$options = SassLibrary.INSTANCE.sass_context_get_options(context.$context);
     }
 
@@ -133,24 +133,36 @@ public class SassOptions {
         return SassLibrary.INSTANCE.sass_option_get_is_indented_syntax_src(this.$options) == 1;
     }
 
-    public void setInputPath(final Path inputPath) {
-        SassLibrary.INSTANCE.sass_option_set_input_path(this.$options, inputPath.toUri().getPath());
+    public void setInputPath(@Nonnull final Path inputPath) {
+        this.setInputPath(inputPath.toUri().getPath());
+    }
+
+    public void setInputPath(@Nonnull final String inputPath) {
+        SassLibrary.INSTANCE.sass_option_set_input_path(this.$options, inputPath);
     }
 
     public Path getInputPath() {
         return Paths.get(SassLibrary.INSTANCE.sass_option_get_input_path(this.$options));
     }
 
-    public void setOutputPath(final Path outputPath) {
-        SassLibrary.INSTANCE.sass_option_set_output_path(this.$options, outputPath.toUri().getPath());
+    public void setOutputPath(@Nonnull final Path outputPath) {
+        this.setOutputPath(outputPath.toUri().getPath());
+    }
+
+    public void setOutputPath(@Nonnull final String outputPath) {
+        SassLibrary.INSTANCE.sass_option_set_output_path(this.$options, outputPath);
     }
 
     public Path getOutputPath() {
         return Paths.get(SassLibrary.INSTANCE.sass_option_get_output_path(this.$options));
     }
 
-    public void setImagePath(final Path imagePath) {
-        SassLibrary.INSTANCE.sass_option_set_image_path(this.$options, imagePath.toUri().getPath());
+    public void setImagePath(@Nonnull final Path imagePath) {
+        this.setImagePath(imagePath.toUri().getPath());
+    }
+
+    public void setImagePath(@Nonnull final String imagePath) {
+        SassLibrary.INSTANCE.sass_option_set_image_path(this.$options, imagePath);
     }
 
     public Path getImagePath() {
@@ -158,14 +170,14 @@ public class SassOptions {
     }
 
     public void setIncludePath(@Nonnull final Path... includePath) {
-        final Collection<String> includePathAsStringArray = transform(asList(includePath), new Function<Path, String>() {
+        final Collection<String> includePathCollection = transform(asList(includePath), new Function<Path, String>() {
             @Nonnull
             @Override
             public String apply(final Path input) {
                 return input.toUri().getPath();
             }
         });
-        this.setIncludePath(includePathAsStringArray.toArray(new String[includePathAsStringArray.size()]));
+        this.setIncludePath(includePathCollection.toArray(new String[includePathCollection.size()]));
     }
 
     public void setIncludePath(@Nonnull final String... includePath) {
@@ -217,7 +229,11 @@ public class SassOptions {
     }
 
     public void setSourceMapFile(@Nonnull final Path sourceMapFile) {
-        SassLibrary.INSTANCE.sass_option_set_source_map_file(this.$options, sourceMapFile.toUri().getPath());
+        this.setSourceMapFile(sourceMapFile.toUri().getPath());
+    }
+
+    public void setSourceMapFile(@Nonnull final String sourceMapFile) {
+        SassLibrary.INSTANCE.sass_option_set_source_map_file(this.$options, sourceMapFile);
     }
 
     public Path getSourceMapFile() {

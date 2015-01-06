@@ -37,7 +37,7 @@ public enum SassTag {
         this.intValue = intValue;
     }
 
-    public int getIntValue() {
+    int getIntValue() {
         return this.intValue;
     }
 
