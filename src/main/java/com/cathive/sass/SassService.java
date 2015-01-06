@@ -16,12 +16,16 @@
 
 package com.cathive.sass;
 
+import com.cathive.sass.constraints.ScssFile;
 import org.libsass.sassc.SassLibrary;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Named;
 import javax.inject.Singleton;
+import javax.validation.constraints.NotNull;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -44,6 +48,36 @@ public class SassService {
         super();
     }
 
+    /**
+     * Returns the version of the underlying native libsass/SassC implementation.
+     * @return
+     *     The version of the underlying native libsass/SassC implementation.
+     */
+    public String getSassCVersion() {
+        return SassLibrary.INSTANCE.libsass_version();
+    }
+
+    /**
+     * Creates a Sass file context for the given input file.
+     * @param inputFile
+     *     SCSS input file to be used when creating the Sass context.
+     * @return
+     *     A Sass context that can be used to compile the given input file.
+     */
+    public SassContext createContext(@NotNull @ScssFile final Path inputFile) {
+        return SassFileContext.create(inputFile);
+    }
+
+    /**
+     * Creates a Sass file context for the given input file.
+     * @param inputFile
+     *     SCSS input file to be used when creating the Sass context.
+     * @return
+     *     A Sass context that can be used to compile the given input file.
+     */
+    public SassContext createContext(@NotNull @ScssFile final String inputFile) {
+        return this.createContext(Paths.get(inputFile));
+    }
 
     @PostConstruct
     protected void initialize() {

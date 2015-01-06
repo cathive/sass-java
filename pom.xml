@@ -110,10 +110,12 @@
                             !*.internal.*,$(module).*;version=${project.version}
                         </_exportcontents>
                         <Import-Package>
+                            javax.annotation;resolution:=optional,
                             javax.inject.*;version="1"
                         </Import-Package>
                         <Bundle-Category>development,framework</Bundle-Category>
                         <Bundle-Copyright>Copyright (c) ${project.inceptionYear}-2015 ${project.organization.name}</Bundle-Copyright>
+                        <Bundle-DocURL>https://github.com/cathive/sass-java/wiki</Bundle-DocURL>
                         <Bundle-License>http://www.apache.org/licenses/LICENSE-2.0.html</Bundle-License>
                         <Bundle-Name>${project.name}</Bundle-Name>
                         <Bundle-RequiredExecutionEnvironment>JavaSE-1.7</Bundle-RequiredExecutionEnvironment>
@@ -163,6 +165,37 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <type>jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <type>jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <type>jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <type>jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator-annotation-processor</artifactId>
+            <version>5.1.3.Final</version>
+            <type>jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
             <type>jar</type>
@@ -186,6 +219,15 @@
             <version>1</version>
             <type>jar</type>
             <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.1.0.Final</version>
+            <type>jar</type>
+            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
@@ -193,6 +235,7 @@
             <version>3.0.0</version>
             <type>jar</type>
             <scope>compile</scope>
+            <optional>true</optional><!-- needed only for annotations -->
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
