@@ -39,7 +39,7 @@ public class SassFileContext extends SassContext {
      *     Underlying native Sass_File_Context structure.
      */
     protected SassFileContext(@Nonnull Sass_File_Context $file_context) {
-        super(SassLibrary.INSTANCE.sass_file_context_get_context($file_context));
+        super(SassLibrary.INSTANCE.sass_file_context_get_context($file_context), false);
         this.$file_context = $file_context;
     }
 
@@ -76,7 +76,7 @@ public class SassFileContext extends SassContext {
     }
 
     @Override
-    public void finalize() throws Throwable {
+    protected void finalize() throws Throwable {
         if (this.$file_context != null) {
             SassLibrary.INSTANCE.sass_delete_file_context(this.$file_context);
         }

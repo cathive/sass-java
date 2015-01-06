@@ -30,7 +30,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -45,7 +44,7 @@ public class SassDataContext extends SassContext {
 
 
     protected SassDataContext(@Nonnull final Sass_Data_Context $data_context) {
-        super(SassLibrary.INSTANCE.sass_data_context_get_context($data_context));
+        super(SassLibrary.INSTANCE.sass_data_context_get_context($data_context), false);
         this.$data_context = $data_context;
     }
 
@@ -101,7 +100,7 @@ public class SassDataContext extends SassContext {
     }
 
     @Override
-    public void finalize() throws Throwable {
+    protected void finalize() throws Throwable {
         if (this.$data_context != null) {
             SassLibrary.INSTANCE.sass_delete_data_context(this.$data_context);
         }

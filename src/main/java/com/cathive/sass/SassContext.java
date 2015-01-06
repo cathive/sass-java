@@ -33,6 +33,9 @@ import java.io.OutputStream;
  */
 public abstract class SassContext {
 
+    /** This flag determines whether this is a standalone Sass context instance. */
+    private boolean standalone;
+
     /** Underlying native Sass context. */
     protected Sass_Context $context;
 
@@ -43,8 +46,12 @@ public abstract class SassContext {
      * Creates a new Sass context wrapper instance.
      * @param $context
      *     Native underlying Sass context.
+     * @param standalone
+     *     Whether this context is managed by a data or file context
+     *     or not. (Unmanaged / standalone context must dispose their native
+     *     components during the Object's finalize phase).
      */
-    protected SassContext(@Nonnull final Sass_Context $context) {
+    protected SassContext(@Nonnull final Sass_Context $context, boolean standalone) {
         super();
         this.$context = $context;
         this.options = new SassOptions(this);
@@ -88,6 +95,14 @@ public abstract class SassContext {
                 SassLibrary.INSTANCE.sass_context_get_error_column(this.$context).intValue(),
                 SassLibrary.INSTANCE.sass_context_get_error_json(this.$context)
         );
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        if (this.standalone && this.$context != null) {
+            // TODO Free the native memory.
+        }
+        super.finalize();
     }
 
 }

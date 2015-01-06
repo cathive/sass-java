@@ -26,8 +26,12 @@ import javax.inject.Singleton;
 import javax.validation.constraints.NotNull;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.MessageFormat;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.text.MessageFormat.format;
 
 /**
  * A service that can be used to compile .scss files.
@@ -39,6 +43,13 @@ public class SassService {
 
     /** Logger for this class. */
     private static final Logger LOGGER = Logger.getLogger(SassService.class.getName());
+
+    /**
+     * Properties as defined in META-INF/sass.xml
+     * <p>These properties will be used to validate the version information against
+     * the bundled native library being used during initialization.</p>
+     */
+    private Properties properties;
 
     /**
      * Default constructor.
@@ -80,8 +91,19 @@ public class SassService {
     }
 
     @PostConstruct
-    protected void initialize() {
-        LOGGER.log(Level.INFO, "Initializing libsass/SassC wrapper (libsass_version() -> \"{0}\")...", SassLibrary.INSTANCE.libsass_version());
+    protected void initialize() throws Exception {
+
+        final String libsassVersion = SassLibrary.INSTANCE.libsass_version();
+        final String expectedLibsassVersion = this.properties.getProperty("libsass.version", "[N/A]");
+
+        this.properties = new Properties();
+        this.properties.loadFromXML(this.getClass().getClassLoader().getResourceAsStream("META-INF/sass.xml"));
+
+        if (!libsassVersion.equals(expectedLibsassVersion)) {
+            throw new IllegalStateException(format("libsass version mismatch. Expected: {0}, found: {1}", libsassVersion, expectedLibsassVersion));
+        }
+
+        LOGGER.log(Level.INFO, "libsass/SassC wrapper successfully initialized. (libsass_version() -> \"{0}\")...", libsassVersion);
     }
 
     @PreDestroy
