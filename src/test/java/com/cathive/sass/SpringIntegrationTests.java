@@ -25,6 +25,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
 
+import java.nio.file.Paths;
+
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -43,7 +45,7 @@ public class SpringIntegrationTests {
         final String sassVersion = this.sassService.getSassCVersion();
         assertNotNull("Could not determine the version of the native libsass implementation.", sassVersion);
 
-        this.sassService.createContext("/bla/blubb/sdfsdf/sdfsjdfs");
+        this.sassService.createContext(Paths.get("/bla/blubb/sdfsdf/sdfsjdfs"));
 
 
     }

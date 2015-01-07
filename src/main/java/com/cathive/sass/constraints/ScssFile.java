@@ -32,13 +32,13 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *     <li>{@code java.nio.file.Path}</li>
  *     <li>{@code java.io.File}</li>
  * </ul>
- * </p>
  * @author Benjamin P. Jung
  */
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Constraint(validatedBy = {
+        ScssFileValidation.ScssFilePathValidator.class,
         ScssFileValidation.ScssFilePathValidator.class
 })
 public @interface ScssFile {

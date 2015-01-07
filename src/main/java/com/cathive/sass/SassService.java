@@ -26,7 +26,6 @@ import javax.inject.Singleton;
 import javax.validation.constraints.NotNull;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.MessageFormat;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -101,7 +100,7 @@ public class SassService {
         // Extractes the expected libsass version from the sass properties.
         final String expectedLibsassVersion = this.properties.getProperty("libsass.version", "[N/A]");
 
-        if (!libsassVersion.equals(expectedLibsassVersion)) {
+        if (!expectedLibsassVersion.equals("[N/A]") && !libsassVersion.equals(expectedLibsassVersion)) {
             throw new IllegalStateException(format("libsass version mismatch. Expected: {0}, found: {1}", libsassVersion, expectedLibsassVersion));
         }
 

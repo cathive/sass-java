@@ -53,6 +53,8 @@ public class SassDataContext extends SassContext {
      * The input stream must produce a valid SCSS document when read.
      * @param inputStream
      *     Input stream to be read. Must produce a valid SCSS document when read.
+     * @return
+     *     A new Sass data context.
      * @throws IOException
      *     If anything weird happens while processing the given input stream.
      */

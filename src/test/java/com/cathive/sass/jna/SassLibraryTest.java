@@ -16,7 +16,6 @@
 
 package com.cathive.sass.jna;
 
-import com.cathive.sass.jna.SassLibrary;
 import com.helger.css.ECSSVersion;
 import com.helger.css.decl.CascadingStyleSheet;
 import com.helger.css.reader.CSSReader;
@@ -33,6 +32,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Properties;
 
 import static com.cathive.sass.jna.SassLibrary.*;
 import static org.junit.Assert.*;
@@ -45,11 +45,15 @@ import static org.junit.Assert.*;
  */
 public class SassLibraryTest {
 
+    private Properties properties;
     private Path workingDirectory;
     private Path simpleScssPath;
 
     @Before
     public void init() throws Exception {
+
+        this.properties = new Properties();
+        this.properties.loadFromXML(this.getClass().getClassLoader().getResourceAsStream("META-INF/sass.xml"));
 
         this.workingDirectory = Files.createTempDirectory("sass-java");
         this.simpleScssPath = this.workingDirectory.resolve("simple.scss");
@@ -77,7 +81,7 @@ public class SassLibraryTest {
 
     @Test
     public void testVersion() {
-        assertEquals("SassC Version mismatch", "3.1.0", SassLibrary.INSTANCE.libsass_version());
+        assertEquals("libsass version mismatch", this.properties.get("libsass.version"), SassLibrary.INSTANCE.libsass_version());
     }
 
     @Test

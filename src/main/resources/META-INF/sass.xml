@@ -22,9 +22,8 @@
   <comment>
     libsass/SassC version definition.
     The version definitions in this file must match the compiled native binaries
-    that have been bundled with libsass-jave.
+    that have been bundled with sass-jave.
   </comment>
-  <entry key="sassc.version">3.1.0</entry>
   <entry key="libsass.version">3.1.0</entry>
   <entry key="sass2scss.version">1.0.3</entry>
 </properties>

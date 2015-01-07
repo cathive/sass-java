@@ -63,6 +63,8 @@ public abstract class SassContext {
      *     Output stream to be written to.
      * @throws SassCompilationException
      *     If compilation of the SCSS source file / data fails.
+     * @throws IOException
+     *     If writing to the given output stream fails.
      */
     public abstract void compile(@WillNotClose @Nonnull final OutputStream outputStream) throws SassCompilationException, IOException;
 
