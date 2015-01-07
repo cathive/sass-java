@@ -25,7 +25,7 @@
     </parent>
     <groupId>com.cathive.sass</groupId>
     <artifactId>com.cathive.sass</artifactId>
-    <version>3.1.0.1</version>
+    <version>3.1.0.2-SNAPSHOT</version>
     <name>libsass</name>
     <description>JNA wrapper around libsass / SassC</description>
     <packaging>bundle</packaging>
@@ -52,7 +52,7 @@
         <connection>scm:git:https://github.com/cathive/sass-java.git</connection>
         <developerConnection>scm:git:git@github.com:cathive/sass-java.git</developerConnection>
         <url>https://github.com/cathive/sass-java/</url>
-        <tag>v3.1.0.1</tag>
+        <tag>master</tag>
     </scm>
     <ciManagement>
         <system>Travis CI</system>
