@@ -16,9 +16,7 @@
   limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.cathive</groupId>
@@ -27,7 +25,7 @@
     </parent>
     <groupId>com.cathive.sass</groupId>
     <artifactId>com.cathive.sass</artifactId>
-    <version>3.1.0.1-SNAPSHOT</version>
+    <version>3.1.0.1</version>
     <name>libsass</name>
     <description>JNA wrapper around libsass / SassC</description>
     <packaging>bundle</packaging>
@@ -54,7 +52,7 @@
         <connection>scm:git:https://github.com/cathive/sass-java.git</connection>
         <developerConnection>scm:git:git@github.com:cathive/sass-java.git</developerConnection>
         <url>https://github.com/cathive/sass-java/</url>
-        <tag>master</tag>
+        <tag>v3.1.0.1</tag>
     </scm>
     <ciManagement>
         <system>Travis CI</system>
