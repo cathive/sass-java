@@ -94,10 +94,12 @@ public class SassService {
     protected void initialize() throws Exception {
 
         final String libsassVersion = SassLibrary.INSTANCE.libsass_version();
-        final String expectedLibsassVersion = this.properties.getProperty("libsass.version", "[N/A]");
 
         this.properties = new Properties();
         this.properties.loadFromXML(this.getClass().getClassLoader().getResourceAsStream("META-INF/sass.xml"));
+
+        // Extractes the expected libsass version from the sass properties.
+        final String expectedLibsassVersion = this.properties.getProperty("libsass.version", "[N/A]");
 
         if (!libsassVersion.equals(expectedLibsassVersion)) {
             throw new IllegalStateException(format("libsass version mismatch. Expected: {0}, found: {1}", libsassVersion, expectedLibsassVersion));

@@ -44,7 +44,7 @@ public class SassFileContext extends SassContext {
     }
 
     public static SassFileContext create(@Nonnull final Path inputFile) {
-        final Sass_File_Context $file_context = SassLibrary.INSTANCE.sass_make_file_context(inputFile.toUri().getPath());
+        final Sass_File_Context $file_context = SassLibrary.INSTANCE.sass_make_file_context(inputFile.toFile().getAbsolutePath());
         return new SassFileContext($file_context);
     }
 

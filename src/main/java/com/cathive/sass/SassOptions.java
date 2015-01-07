@@ -134,7 +134,7 @@ public class SassOptions {
     }
 
     public void setInputPath(@Nonnull final Path inputPath) {
-        this.setInputPath(inputPath.toUri().getPath());
+        this.setInputPath(inputPath.toFile().getAbsolutePath());
     }
 
     public void setInputPath(@Nonnull final String inputPath) {
@@ -146,7 +146,7 @@ public class SassOptions {
     }
 
     public void setOutputPath(@Nonnull final Path outputPath) {
-        this.setOutputPath(outputPath.toUri().getPath());
+        this.setOutputPath(outputPath.toFile().getAbsolutePath());
     }
 
     public void setOutputPath(@Nonnull final String outputPath) {
@@ -158,7 +158,7 @@ public class SassOptions {
     }
 
     public void setImagePath(@Nonnull final Path imagePath) {
-        this.setImagePath(imagePath.toUri().getPath());
+        this.setImagePath(imagePath.toFile().getAbsolutePath());
     }
 
     public void setImagePath(@Nonnull final String imagePath) {
@@ -174,7 +174,7 @@ public class SassOptions {
             @Nonnull
             @Override
             public String apply(final Path input) {
-                return input.toUri().getPath();
+                return input.toFile().getAbsolutePath();
             }
         });
         this.setIncludePath(includePathCollection.toArray(new String[includePathCollection.size()]));
@@ -214,14 +214,14 @@ public class SassOptions {
     }
 
     public void pushIncludePath(@Nonnull final Path path) {
-        this.pushIncludePath(path.toUri().getPath());
+        this.pushIncludePath(path.toFile().getAbsolutePath());
     }
 
     public void pushIncludePath(@Nonnull final String path) {
         SassLibrary.INSTANCE.sass_option_push_include_path(this.$options, path);
         // Error handling, because sass_push_include_path seems to be broken on libsass/SassC v3.1.0.
         final Collection<Path> includePath = new ArrayList<>(this.getIncludePath());
-        if (!includePath.contains(Paths.get("path"))) {
+        if (!includePath.contains(Paths.get(path))) {
             LOGGER.log(Level.WARNING, "Could not push \"{0}\" to include paths. sass_option_push_include_path seems to be broken. Using workaround...", path);
             includePath.add(Paths.get(path));
             this.setIncludePath(includePath);
@@ -229,7 +229,7 @@ public class SassOptions {
     }
 
     public void setSourceMapFile(@Nonnull final Path sourceMapFile) {
-        this.setSourceMapFile(sourceMapFile.toUri().getPath());
+        this.setSourceMapFile(sourceMapFile.toFile().getAbsolutePath());
     }
 
     public void setSourceMapFile(@Nonnull final String sourceMapFile) {

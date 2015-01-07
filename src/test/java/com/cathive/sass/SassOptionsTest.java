@@ -83,21 +83,21 @@ public class SassOptionsTest {
 
         // Input path
         options.setInputPath(Paths.get("/my/path1"));
-        assertEquals(Paths.get("/my/path1"), options.getInputPath());
+        assertEquals(Paths.get("/my/path1").toAbsolutePath(), options.getInputPath().toAbsolutePath());
         options.setInputPath(Paths.get("/my/other/path2"));
-        assertEquals(Paths.get("/my", "other", "path2"), options.getInputPath());
+        assertEquals(Paths.get("/my", "other", "path2").toAbsolutePath(), options.getInputPath().toAbsolutePath());
 
         // Output path
         options.setOutputPath(Paths.get("/my/path1"));
-        assertEquals(Paths.get("/my/path1"), options.getOutputPath());
+        assertEquals(Paths.get("/my/path1").toAbsolutePath(), options.getOutputPath().toAbsolutePath());
         options.setOutputPath(Paths.get("/my/other/path2"));
-        assertEquals(Paths.get("/my", "other", "path2"), options.getOutputPath());
+        assertEquals(Paths.get("/my", "other", "path2").toAbsolutePath(), options.getOutputPath().toAbsolutePath());
 
         // Image path
         options.setImagePath(Paths.get("/my/path1"));
-        assertEquals(Paths.get("/my/path1"), options.getImagePath());
+        assertEquals(Paths.get("/my/path1").toAbsolutePath(), options.getImagePath().toAbsolutePath());
         options.setImagePath(Paths.get("/my/other/path2"));
-        assertEquals(Paths.get("/my", "other", "path2"), options.getImagePath());
+        assertEquals(Paths.get("/my", "other", "path2").toAbsolutePath(), options.getImagePath().toAbsolutePath());
 
         // includePath functionality
         assertEquals(0, options.getIncludePath().size());
@@ -107,7 +107,7 @@ public class SassOptionsTest {
         assertEquals(2, options.getIncludePath().size());
         options.pushIncludePath("/path3");
         assertEquals(3, options.getIncludePath().size());
-        assertTrue(options.getIncludePath().contains(Paths.get("/path3")));
+        assertTrue(options.getIncludePath().contains(Paths.get("/path3").toAbsolutePath()));
         options.clearIncludePath();
         assertEquals(0, options.getIncludePath().size());
 

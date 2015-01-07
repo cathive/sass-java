@@ -86,7 +86,7 @@ public class SassLibraryTest {
     public void testSimpleScssFile() {
 
         // Creates the file context and sets the precision option.
-        final Sass_File_Context fileContext = SassLibrary.INSTANCE.sass_make_file_context(this.simpleScssPath.toAbsolutePath().toUri().getPath());
+        final Sass_File_Context fileContext = SassLibrary.INSTANCE.sass_make_file_context(this.simpleScssPath.toFile().getAbsolutePath());
         final Sass_Context context = SassLibrary.INSTANCE.sass_file_context_get_context(fileContext);
         final Sass_Options contextOptions = SassLibrary.INSTANCE.sass_context_get_options(context);
         SassLibrary.INSTANCE.sass_option_set_precision(contextOptions, 10);
