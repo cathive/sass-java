@@ -17,9 +17,9 @@
 package com.cathive.sass;
 
 import com.google.common.io.ByteStreams;
-import org.libsass.sassc.SassLibrary;
-import org.libsass.sassc.SassLibrary.Sass_Compiler;
-import org.libsass.sassc.SassLibrary.Sass_Data_Context;
+import com.cathive.sass.jna.SassLibrary;
+import com.cathive.sass.jna.SassLibrary.Sass_Compiler;
+import com.cathive.sass.jna.SassLibrary.Sass_Data_Context;
 
 import javax.annotation.Nonnull;
 import javax.annotation.WillClose;

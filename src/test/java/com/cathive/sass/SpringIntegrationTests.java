@@ -41,7 +41,7 @@ public class SpringIntegrationTests {
     public void testSassServiceFunctionality() {
 
         final String sassVersion = this.sassService.getSassCVersion();
-        assertNotNull("Could not determine the version of the native libsass/SassC implementation.", sassVersion);
+        assertNotNull("Could not determine the version of the native libsass implementation.", sassVersion);
 
         this.sassService.createContext("/bla/blubb/sdfsdf/sdfsjdfs");
 

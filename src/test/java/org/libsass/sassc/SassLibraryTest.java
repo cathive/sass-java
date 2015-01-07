@@ -16,6 +16,7 @@
 
 package org.libsass.sassc;
 
+import com.cathive.sass.jna.SassLibrary;
 import com.helger.css.ECSSVersion;
 import com.helger.css.decl.CascadingStyleSheet;
 import com.helger.css.reader.CSSReader;
@@ -24,7 +25,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
@@ -34,14 +34,12 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-import static org.libsass.sassc.SassLibrary.*;
+import static com.cathive.sass.jna.SassLibrary.*;
+import static org.junit.Assert.*;
 
 /**
  * Test cases for the wrapped native library.
- * <p>The complete API definition of libsass/SassC can be found here:
+ * <p>The complete API definition of libsass can be found here:
  * <a href="https://github.com/sass/libsass/wiki/API-Documentation">https://github.com/sass/libsass/wiki/API-Documentation</a>.</p>
  * @author Benjamin P. Jung
  */

@@ -16,8 +16,8 @@
 
 package com.cathive.sass;
 
-import org.libsass.sassc.SassLibrary;
-import org.libsass.sassc.SassLibrary.Sass_Context;
+import com.cathive.sass.jna.SassLibrary;
+import com.cathive.sass.jna.SassLibrary.Sass_Context;
 
 import javax.annotation.Nonnull;
 import javax.annotation.WillNotClose;

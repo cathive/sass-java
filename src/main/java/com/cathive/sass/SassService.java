@@ -17,7 +17,7 @@
 package com.cathive.sass;
 
 import com.cathive.sass.constraints.ScssFile;
-import org.libsass.sassc.SassLibrary;
+import com.cathive.sass.jna.SassLibrary;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -60,9 +60,9 @@ public class SassService {
     }
 
     /**
-     * Returns the version of the underlying native libsass/SassC implementation.
+     * Returns the version of the underlying native libsass implementation.
      * @return
-     *     The version of the underlying native libsass/SassC implementation.
+     *     The version of the underlying native libsass implementation.
      */
     public String getSassCVersion() {
         return SassLibrary.INSTANCE.libsass_version();
@@ -105,12 +105,12 @@ public class SassService {
             throw new IllegalStateException(format("libsass version mismatch. Expected: {0}, found: {1}", libsassVersion, expectedLibsassVersion));
         }
 
-        LOGGER.log(Level.INFO, "libsass/SassC wrapper successfully initialized. (libsass_version() -> \"{0}\")...", libsassVersion);
+        LOGGER.log(Level.INFO, "libsass wrapper successfully initialized. (libsass_version() -> \"{0}\")...", libsassVersion);
     }
 
     @PreDestroy
     protected void dispose() {
-        // TODO Free all native handles correctly.
+        /* Nothing to be done ... for now! */
     }
 
 }

@@ -47,7 +47,7 @@ public class SassCompilationException extends RuntimeException {
     /**
      * Creates a new Sass compilation exception.
      * @param status
-     *     Numeric status code as returned by the libsass/SassC compiler.
+     *     Numeric status code as returned by the libsass compiler.
      * @param message
      *     Formatted humand-readable error message.
      * @param fileName

@@ -18,8 +18,8 @@ package com.cathive.sass;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
-import org.libsass.sassc.SassLibrary;
-import org.libsass.sassc.SassLibrary.Sass_Options;
+import com.cathive.sass.jna.SassLibrary;
+import com.cathive.sass.jna.SassLibrary.Sass_Options;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -219,7 +219,7 @@ public class SassOptions {
 
     public void pushIncludePath(@Nonnull final String path) {
         SassLibrary.INSTANCE.sass_option_push_include_path(this.$options, path);
-        // Error handling, because sass_push_include_path seems to be broken on libsass/SassC v3.1.0.
+        // Error handling, because sass_push_include_path seems to be broken on libsass v3.1.0.
         final Collection<Path> includePath = new ArrayList<>(this.getIncludePath());
         if (!includePath.contains(Paths.get(path))) {
             LOGGER.log(Level.WARNING, "Could not push \"{0}\" to include paths. sass_option_push_include_path seems to be broken. Using workaround...", path);
