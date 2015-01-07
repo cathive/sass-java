@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.libsass.sassc;
+package com.cathive.sass.jna;
 
 import com.cathive.sass.jna.SassLibrary;
 import com.helger.css.ECSSVersion;
