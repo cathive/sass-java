@@ -35,6 +35,7 @@ void compileABunchOfScssFiles() {
     // Our root directory that contains the 
     Path srcRoot = Paths.create("/path/to/my/scss/files");
 
+    // Creates a new sass file context.
     SassContext ctx = SassFileContext.create(srcRoot.resolve("styles.scss"));
 
     SassOptions options = ctx.getOptions();
