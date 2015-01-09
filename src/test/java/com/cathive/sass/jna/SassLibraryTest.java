@@ -48,6 +48,7 @@ public class SassLibraryTest {
     private Properties properties;
     private Path workingDirectory;
     private Path simpleScssPath;
+    private Path simpleMapPath;
 
     @Before
     public void init() throws Exception {
@@ -57,6 +58,7 @@ public class SassLibraryTest {
 
         this.workingDirectory = Files.createTempDirectory("sass-java");
         this.simpleScssPath = this.workingDirectory.resolve("simple.scss");
+        this.simpleMapPath = this.workingDirectory.resolve("simple.css.map");
 
         // Copies all the stuff that is needed for our tests to the temporary directory.
         Files.copy(this.getClass().getClassLoader().getResourceAsStream("simple.scss"), this.simpleScssPath);
@@ -91,6 +93,9 @@ public class SassLibraryTest {
         final Sass_File_Context fileContext = SassLibrary.INSTANCE.sass_make_file_context(this.simpleScssPath.toFile().getAbsolutePath());
         final Sass_Context context = SassLibrary.INSTANCE.sass_file_context_get_context(fileContext);
         final Sass_Options contextOptions = SassLibrary.INSTANCE.sass_context_get_options(context);
+        SassLibrary.INSTANCE.sass_option_set_source_map_contents(contextOptions, (byte) 1);
+        SassLibrary.INSTANCE.sass_option_set_omit_source_map_url(contextOptions, (byte) 0);
+        SassLibrary.INSTANCE.sass_option_set_source_map_file(contextOptions, this.simpleMapPath.toFile().getAbsolutePath());
         SassLibrary.INSTANCE.sass_option_set_precision(contextOptions, 10);
 
         // Performs the actual compilation.
@@ -98,14 +103,17 @@ public class SassLibraryTest {
 
         // Retrieves the CSS output string.
         final String outputString;
+        final String sourceMapString;
 
         try {
             if (compilerStatus != 0) {
                 outputString = null;
+                sourceMapString = null;
                 final String errorMessage = SassLibrary.INSTANCE.sass_context_get_error_message(context);
                 fail(errorMessage);
             } else {
                 outputString = SassLibrary.INSTANCE.sass_context_get_output_string(context);
+                sourceMapString = SassLibrary.INSTANCE.sass_context_get_source_map_string(context);
             }
         } finally {
             SassLibrary.INSTANCE.sass_delete_file_context(fileContext);
@@ -114,6 +122,7 @@ public class SassLibraryTest {
         // Asserts, that the creates cascading style sheet can be read and parsed.
         final CascadingStyleSheet styleSheet = CSSReader.readFromString(outputString, ECSSVersion.LATEST);
         assertNotNull(styleSheet);
+        assertNotNull(sourceMapString);
 
     }
 
