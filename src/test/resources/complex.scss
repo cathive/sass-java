@@ -1,0 +1,15 @@
+@import "common";
+@import "variables1";
+@import "variables2";
+
+.color1 {
+  color: $color1;
+}
+
+.color2 {
+  color: $color2;
+}
+
+.favourite-color {
+  color: $myFavouriteColor;
+}

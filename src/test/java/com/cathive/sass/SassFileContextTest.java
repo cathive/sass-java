@@ -35,15 +35,30 @@ public class SassFileContextTest {
 
     private Path workingDirectory;
     private Path simpleScssPath;
+    private Path complexScssPath;
+    private Path includes1Path;
+    private Path includes2Path;
 
     @Before
     public void init() throws Exception {
 
         this.workingDirectory = Files.createTempDirectory("sass-java");
         this.simpleScssPath = this.workingDirectory.resolve("simple.scss");
+        this.complexScssPath = this.workingDirectory.resolve("complex.scss");
+        this.includes1Path = this.workingDirectory.resolve("includes1");
+        this.includes2Path = this.workingDirectory.resolve("includes2");
 
         // Copies all the stuff that is needed for our tests to the temporary directory.
         Files.copy(this.getClass().getClassLoader().getResourceAsStream("simple.scss"), this.simpleScssPath);
+        Files.copy(this.getClass().getClassLoader().getResourceAsStream("complex.scss"), this.complexScssPath);
+
+
+        Files.createDirectories(includes1Path);
+        Files.createDirectories(includes2Path);
+        Files.copy(this.getClass().getClassLoader().getResourceAsStream("includes1/_variables1.scss"), includes1Path.resolve("_variables1.scss"));
+        Files.copy(this.getClass().getClassLoader().getResourceAsStream("includes1/_common.scss"), includes1Path.resolve("_common.scss"));
+        Files.copy(this.getClass().getClassLoader().getResourceAsStream("includes2/_variables2.scss"), includes2Path.resolve("_variables2.scss"));
+        Files.copy(this.getClass().getClassLoader().getResourceAsStream("includes2/_common.scss"), includes2Path.resolve("_common.scss"));
 
     }
 
@@ -66,6 +81,15 @@ public class SassFileContextTest {
     @Test
     public void testSimpleFileContext() throws Exception {
         final SassContext context = SassFileContext.create(this.simpleScssPath);
+        context.getOptions().setOutputStyle(SassOutputStyle.NESTED);
+        context.compile(System.out);
+    }
+
+    @Test
+    public void testComplexFileContext() throws Exception {
+        final SassContext context = SassFileContext.create(this.complexScssPath);
+        context.getOptions().setIncludePath(this.includes1Path, this.includes2Path);
+        context.getOptions().setOutputStyle(SassOutputStyle.COMPRESSED);
         context.compile(System.out);
     }
 
