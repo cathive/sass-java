@@ -1,3 +1,4 @@
+@import "./simple.scss";
 @import "common";
 @import "variables1";
 @import "variables2";
@@ -12,4 +13,16 @@
 
 .favourite-color {
   color: $myFavouriteColor;
+}
+
+.red {
+  color: $color-red;
+}
+
+.green {
+  color: $color-green;
+}
+
+.blue {
+  color: $color-blue;
 }

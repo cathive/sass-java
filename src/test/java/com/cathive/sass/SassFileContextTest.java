@@ -81,7 +81,7 @@ public class SassFileContextTest {
     @Test
     public void testSimpleFileContext() throws Exception {
         final SassContext context = SassFileContext.create(this.simpleScssPath);
-        context.getOptions().setOutputStyle(SassOutputStyle.NESTED);
+        context.getOptions().setOutputStyle(SassOutputStyle.COMPRESSED);
         context.compile(System.out);
     }
 
@@ -89,7 +89,7 @@ public class SassFileContextTest {
     public void testComplexFileContext() throws Exception {
         final SassContext context = SassFileContext.create(this.complexScssPath);
         context.getOptions().setIncludePath(this.includes1Path, this.includes2Path);
-        context.getOptions().setOutputStyle(SassOutputStyle.COMPRESSED);
+        context.getOptions().setOutputStyle(SassOutputStyle.NESTED);
         context.compile(System.out);
     }
 

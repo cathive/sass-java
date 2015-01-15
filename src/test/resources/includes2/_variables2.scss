@@ -1,2 +1,7 @@
+@import "common";
+
 $color2: #00ff00;
-$myFavouriteColor: green;
+
+.favouriteColor-no2 {
+  color: $myFavouriteColor;
+}
