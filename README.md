@@ -17,7 +17,20 @@ To use the library in your Maven based projects just add the following lines to 
 
 ## Native libraries
 
-Compiled dynamic libraries of libsass are bundled inside of the JAR artifact together with the required auto-generated JNA binding classes and nice wrapper classes to allow for a Java-like feeling when working with libsass. Currently only a few native platforms are supported. If your desired platform is missing, feel free to open an issue and add a pre-compiled version of libsass for inclusion!
+Compiled dynamic libraries of libsass are bundled inside of the JAR artifact together with the required auto-generated JNA binding classes and nice wrapper classes to allow for a Java-like feeling when working with libsass.
+
+### Supported platforms
+
+Currently only a few native platforms are supported:
+
+ * Linux x86-64
+ * Mac OS X (64 bit only)
+ * Windows x86-64
+ * Windows x86
+
+If your desired platform / architecture is missing, feel free to open an issue and add a pre-compiled version of libsass for inclusion!
+
+As of now the following
 
 ## Example code
 
