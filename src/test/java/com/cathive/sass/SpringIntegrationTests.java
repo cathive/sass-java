@@ -42,7 +42,7 @@ public class SpringIntegrationTests {
     @Test
     public void testSassServiceFunctionality() {
 
-        final String sassVersion = this.sassService.getSassCVersion();
+        final String sassVersion = this.sassService.getLibsassVersion();
         assertNotNull("Could not determine the version of the native libsass implementation.", sassVersion);
 
         this.sassService.createContext(Paths.get("/bla/blubb/sdfsdf/sdfsjdfs"));
