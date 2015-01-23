@@ -33,7 +33,7 @@ import java.util.logging.Logger;
 import static java.text.MessageFormat.format;
 
 /**
- * A service that can be used to compile .scss files.
+ * A service that can be used to compile Sass files.
  * @author Benjamin P. Jung
  */
 @Named("sassService")
@@ -63,7 +63,7 @@ public class SassService {
      * @return
      *     The version of the underlying native libsass implementation.
      */
-    public String getSassCVersion() {
+    public String getLibsassVersion() {
         return SassLibrary.INSTANCE.libsass_version();
     }
 
@@ -97,7 +97,7 @@ public class SassService {
         this.properties = new Properties();
         this.properties.loadFromXML(this.getClass().getClassLoader().getResourceAsStream("META-INF/sass.xml"));
 
-        // Extractes the expected libsass version from the sass properties.
+        // Extracts the expected libsass version from the sass properties.
         final String expectedLibsassVersion = this.properties.getProperty("libsass.version", "[N/A]");
 
         if (!expectedLibsassVersion.equals("[N/A]") && !libsassVersion.equals(expectedLibsassVersion)) {
