@@ -22,38 +22,40 @@ Compiled dynamic libraries of libsass are bundled inside of the JAR artifact tog
 ## Example code
 
 ```java
-import java.nio.Paths;
-
 import com.cathive.sass.SassCompilationException;
 import com.cathive.sass.SassContext;
 import com.cathive.sass.SassFileContext;
 import com.cathive.sass.SassOptions;
 import com.cathive.sass.SassOutputStyle;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 /**
  * A little example to demonstrate some of the features of sass-java.
  */
-class SassExample {
+class SimpleSassExample {
 
     public static void main(String... args) {
-    
-        // Our root directory that contains the 
-        Path srcRoot = Paths.create("/path/to/my/scss/files");
-    
+
+        // Our root directory that contains the
+        Path srcRoot = Paths.get("/path/to/my/scss/files");
+
         // Creates a new sass file context.
         SassContext ctx = SassFileContext.create(srcRoot.resolve("styles.scss"));
-    
+
         SassOptions options = ctx.getOptions();
         options.setIncludePath(
                 srcRoot,
                 Paths.get("/another/include/directory"),
-                Paths.get("/and/yet/another/include/directoty"
+                Paths.get("/and/yet/another/include/directory")
                 //[...] varargs can be passed to add even more include directories.
         );
         options.setOutputStyle(SassOutputStyle.NESTED);
         // any other options supported by libsass including source map stuff can be configured
         // as well here.
-        
+
         // Will print the compiled CSS contents to the console. Use a FileOutputStream
         // or some other fancy mechanism to redirect the output to wherever you want.
         try {
@@ -63,7 +65,7 @@ class SassExample {
             // by libsass to the standard error output.
             System.err.println(e.getMessage());
         } catch (IOException e) {
-            System.err.println(String.format("Compilation failed: %s"), e.getMessage());
+            System.err.println(String.format("Compilation failed: %s", e.getMessage()));
         }
     }
 
