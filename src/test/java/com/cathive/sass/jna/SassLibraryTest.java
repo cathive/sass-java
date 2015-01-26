@@ -27,10 +27,8 @@ import org.junit.Test;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Properties;
 
@@ -129,7 +127,8 @@ public class SassLibraryTest {
     @Ignore("The Sass data context seems to be defunct right now. :-(")
     @Test
     public void testSimpleScssData() {
-        final Sass_Data_Context dataContext = SassLibrary.INSTANCE.sass_make_data_context(ByteBuffer.wrap("html { background-color: red; }".getBytes(Charset.forName("UTF-8"))));
+        Files.newInputStream(Paths.get("/"),StandardOpenOption.APPEND);
+        final Sass_Data_Context dataContext = SassLibrary.INSTANCE.sass_make_data_context(ByteBuffer.wrap("html { background-color: red; }".getBytes(StandardCharsets.UTF_8)));
         final Sass_Context context = SassLibrary.INSTANCE.sass_data_context_get_context(dataContext);
         final Sass_Options options = SassLibrary.INSTANCE.sass_data_context_get_options(dataContext);
         SassLibrary.INSTANCE.sass_option_set_source_comments(options, (byte) 0);
