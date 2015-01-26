@@ -16,14 +16,14 @@
 
 package com.cathive.sass.constraints;
 
+import com.google.common.collect.ImmutableSet;
+
 import javax.annotation.Nonnull;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -37,12 +37,7 @@ public final class ScssFileValidation {
      * Storage of all the allowed file extension that can be used for
      * SCSS file content.
      */
-    private static final Set<String> ALLOWED_FILE_EXTENSIONS;
-    static {
-        ALLOWED_FILE_EXTENSIONS = new HashSet<>();
-        ALLOWED_FILE_EXTENSIONS.add(".sass");
-        ALLOWED_FILE_EXTENSIONS.add(".scss");
-    }
+    private static Set<String> ALLOWED_FILE_EXTENSIONS = ImmutableSet.<String>builder().add(".scss", ".sass").build();
 
     /**
      * Returns all valid file extensions that can be used for SCSS files.
@@ -50,7 +45,7 @@ public final class ScssFileValidation {
      *     All valid file extensions that can be used for SCSS files.
      */
     public static Set<String> getAllowedFileExtensions() {
-        return Collections.unmodifiableSet(ALLOWED_FILE_EXTENSIONS);
+        return ALLOWED_FILE_EXTENSIONS;
     }
 
     /**
@@ -59,11 +54,12 @@ public final class ScssFileValidation {
      *     File extensions that can be used for SCSS files.
      */
     public static void setAllowedFileExtensions(@Nonnull final Set<String> allowedFileExtensions) {
-        ALLOWED_FILE_EXTENSIONS.clear();
-        ALLOWED_FILE_EXTENSIONS.addAll(allowedFileExtensions);
+        ALLOWED_FILE_EXTENSIONS = ImmutableSet.copyOf(allowedFileExtensions);
     }
 
-
+    /**
+     * This validator will let a file reference pass if the given handle points to a readable file.
+     */
     public static class ScssFileFileValidator implements ConstraintValidator<ScssFile, File> {
         @Override
         public void initialize(final ScssFile constraintAnnotation) { /* Nothing to do. */ }
@@ -71,11 +67,13 @@ public final class ScssFileValidation {
         @Override
         public boolean isValid(final File value, final ConstraintValidatorContext context) {
             // TODO Implement more checks.
-            return value.isFile();
+            return value.isFile() && value.canRead();
         }
     }
 
-
+    /**
+     * This validator will let a path reference pass if the given handle points to a readable file.
+     */
     public static class ScssFilePathValidator implements ConstraintValidator<ScssFile, Path> {
         @Override
         public void initialize(final ScssFile constraintAnnotation) { /* Nothing to do. */ }
@@ -83,7 +81,7 @@ public final class ScssFileValidation {
         @Override
         public boolean isValid(final Path value, final ConstraintValidatorContext context) {
             // TODO Implement more checks.
-            return Files.isRegularFile(value);
+            return Files.isRegularFile(value) && Files.isReadable(value);
         }
     }
 
