@@ -127,7 +127,6 @@ public class SassLibraryTest {
     @Ignore("The Sass data context seems to be defunct right now. :-(")
     @Test
     public void testSimpleScssData() {
-        Files.newInputStream(Paths.get("/"),StandardOpenOption.APPEND);
         final Sass_Data_Context dataContext = SassLibrary.INSTANCE.sass_make_data_context(ByteBuffer.wrap("html { background-color: red; }".getBytes(StandardCharsets.UTF_8)));
         final Sass_Context context = SassLibrary.INSTANCE.sass_data_context_get_context(dataContext);
         final Sass_Options options = SassLibrary.INSTANCE.sass_data_context_get_options(dataContext);

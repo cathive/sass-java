@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.WillNotClose;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Objects;
 
 /**
  * An (abstract) Sass context definition.
@@ -34,10 +35,10 @@ import java.io.OutputStream;
 public abstract class SassContext {
 
     /** This flag determines whether this is a standalone Sass context instance. */
-    private boolean standalone;
+    private final boolean standalone;
 
     /** Underlying native Sass context. */
-    protected Sass_Context $context;
+    protected final Sass_Context $context;
 
     /** Underlying native Sass options associated with the data or file context. */
     protected SassOptions options;
@@ -53,8 +54,9 @@ public abstract class SassContext {
      */
     protected SassContext(@Nonnull final Sass_Context $context, boolean standalone) {
         super();
-        this.$context = $context;
+        this.$context = Objects.requireNonNull($context, "Context must not be null!");
         this.options = new SassOptions(this);
+        this.standalone = standalone;
     }
 
     /**
@@ -79,7 +81,7 @@ public abstract class SassContext {
     }
 
     public void setOptions(@Nonnull final SassOptions options) {
-        this.options = options;
+        this.options = Objects.requireNonNull(options, "Options must not be null!");
     }
 
     /**
@@ -101,7 +103,8 @@ public abstract class SassContext {
 
     @Override
     protected void finalize() throws Throwable {
-        if (this.standalone && this.$context != null) {
+        //noinspection StatementWithEmptyBody
+        if (this.standalone) {
             // TODO Free the native memory.
         }
         super.finalize();
