@@ -44,6 +44,12 @@ public class SassService {
     private static final Logger LOGGER = Logger.getLogger(SassService.class.getName());
 
     /**
+     * This constant string will be reported by {@code libsass_version} if the version information
+     * has not been baked into the native shared library.
+     */
+    private static final String LIBSASS_VERSION_NOT_AVAILABLE = "[NA]";
+
+    /**
      * Properties as defined in META-INF/sass.xml
      * <p>These properties will be used to validate the version information against
      * the bundled native library being used during initialization.</p>
@@ -100,7 +106,7 @@ public class SassService {
         // Extracts the expected libsass version from the sass properties.
         final String expectedLibsassVersion = this.properties.getProperty("libsass.version", "[N/A]");
 
-        if (!expectedLibsassVersion.equals("[N/A]") && !libsassVersion.equals(expectedLibsassVersion)) {
+        if (!expectedLibsassVersion.equals(LIBSASS_VERSION_NOT_AVAILABLE) && !libsassVersion.equals(expectedLibsassVersion)) {
             throw new IllegalStateException(format("libsass version mismatch. Expected: {0}, found: {1}", libsassVersion, expectedLibsassVersion));
         }
 
