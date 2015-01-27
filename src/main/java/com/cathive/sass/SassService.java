@@ -30,8 +30,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static java.text.MessageFormat.format;
-
 /**
  * A service that can be used to compile Sass files.
  * @author Benjamin P. Jung
@@ -104,13 +102,14 @@ public class SassService {
         this.properties.loadFromXML(this.getClass().getClassLoader().getResourceAsStream("META-INF/sass.xml"));
 
         // Extracts the expected libsass version from the sass properties.
-        final String expectedLibsassVersion = this.properties.getProperty("libsass.version", "[N/A]");
+        final String expectedLibsassVersion = this.properties.getProperty("libsass.version", LIBSASS_VERSION_NOT_AVAILABLE);
 
         if (!expectedLibsassVersion.equals(LIBSASS_VERSION_NOT_AVAILABLE) && !libsassVersion.equals(expectedLibsassVersion)) {
-            throw new IllegalStateException(format("libsass version mismatch. Expected: {0}, found: {1}", libsassVersion, expectedLibsassVersion));
+            LOGGER.log(Level.WARNING, "libsass version mismatch. Expected: {0}, found: {1}", new Object[]{libsassVersion, expectedLibsassVersion });
         }
 
-        LOGGER.log(Level.INFO, "libsass wrapper successfully initialized. (libsass_version() -> \"{0}\")...", libsassVersion);
+        LOGGER.log(Level.INFO, "libsass wrapper successfully initialized.");
+
     }
 
     @PreDestroy
