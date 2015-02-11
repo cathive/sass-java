@@ -28,7 +28,7 @@ public class SassCompilationException extends RuntimeException {
     /** @see java.io.Serializable */
     private static final long serialVersionUID = 1L;
 
-    /** Numeric status code as returned by the libsass/SassC compiler. */
+    /** Numeric status code as returned by the libsass compiler. */
     private final int status;
 
     /** Name of the input file that caused issues. */
