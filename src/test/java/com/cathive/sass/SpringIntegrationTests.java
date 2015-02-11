@@ -18,12 +18,11 @@ package com.cathive.sass;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import javax.inject.Inject;
 
 import java.nio.file.Paths;
 
@@ -36,7 +35,7 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class SpringIntegrationTests {
 
-    @Inject
+    @Autowired
     private SassService sassService;
 
     @Test
