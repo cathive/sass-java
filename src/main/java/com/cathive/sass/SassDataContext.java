@@ -75,30 +75,15 @@ public class SassDataContext extends SassContext {
     }
 
     @Override
-    public void compile(@WillNotClose @Nonnull final OutputStream outputStream) throws SassCompilationException, IOException {
-
-        // Creates a SCSS compiler instance and compiles the SCSS input.
-        final Sass_Compiler $compiler = SassLibrary.INSTANCE.sass_make_data_compiler(this.$data_context);
-        final int parseStatus = SassLibrary.INSTANCE.sass_compiler_parse($compiler);
-        final int compileStatus = SassLibrary.INSTANCE.sass_compiler_execute($compiler);
-        final String output = SassLibrary.INSTANCE.sass_context_get_output_string(this.$context);
-
-        // Deletes the underlying native compiler object and releases allocated memory.
-        SassLibrary.INSTANCE.sass_delete_compiler($compiler);
-
-        // Error handling.
-        if (parseStatus != 0) { this.throwCompilationException(parseStatus); }
-        if (compileStatus != 0) { this.throwCompilationException(compileStatus); }
-
-        // Writes the result to the output stream.
-        outputStream.write(output.getBytes());
-
-    }
-
-    @Override
     public void setOptions(@Nonnull final SassOptions options) {
         super.setOptions(options);
         SassLibrary.INSTANCE.sass_data_context_set_options(this.$data_context, this.options.$options);
+    }
+
+    @Override
+    @Nonnull
+    protected Sass_Compiler createCompiler() {
+        return SassLibrary.INSTANCE.sass_make_data_compiler(this.$data_context);
     }
 
     @Override

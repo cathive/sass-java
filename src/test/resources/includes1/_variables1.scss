@@ -5,3 +5,7 @@ $color1: #ff0000;
 .favouriteColor-no1 {
   color: $myFavouriteColor;
 }
+
+.image-url1 {
+  background-image: image-url('../myImage.png');
+}

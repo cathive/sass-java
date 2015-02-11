@@ -48,25 +48,11 @@ public class SassFileContext extends SassContext {
         return new SassFileContext($file_context);
     }
 
+
     @Override
-    public void compile(@WillNotClose @Nonnull OutputStream outputStream) throws SassCompilationException, IOException {
-
-        // Creates a SCSS compiler instance and compiles the SCSS input.
-        final SassLibrary.Sass_Compiler $compiler = SassLibrary.INSTANCE.sass_make_file_compiler(this.$file_context);
-        final int parseStatus = SassLibrary.INSTANCE.sass_compiler_parse($compiler);
-        final int compileStatus = SassLibrary.INSTANCE.sass_compiler_execute($compiler);
-        final String output = SassLibrary.INSTANCE.sass_context_get_output_string(this.$context);
-
-        // Deletes the underlying native compiler object and releases allocated memory.
-        SassLibrary.INSTANCE.sass_delete_compiler($compiler);
-
-        // Error handling.
-        if (parseStatus != 0) { this.throwCompilationException(parseStatus); }
-        if (compileStatus != 0) { this.throwCompilationException(compileStatus); }
-
-        // Writes the result to the output stream.
-        outputStream.write(output.getBytes());
-
+    @Nonnull
+    protected SassLibrary.Sass_Compiler createCompiler() {
+        return SassLibrary.INSTANCE.sass_make_file_compiler(this.$file_context);
     }
 
     @Override

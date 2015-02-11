@@ -68,7 +68,44 @@ public abstract class SassContext {
      * @throws IOException
      *     If writing to the given output stream fails.
      */
-    public abstract void compile(@WillNotClose @Nonnull final OutputStream outputStream) throws SassCompilationException, IOException;
+    public void compile(@WillNotClose @Nonnull final OutputStream outputStream) throws SassCompilationException, IOException {
+        outputStream.write(this.compile().getBytes());
+    }
+
+    /**
+     * Performs compilation of the SCSS data that is represented by this Sass context.
+     * @return
+     *     The result of the compilation.
+     * @throws SassCompilationException
+     *     If compilation of the SCSS source file / data fails.
+     */
+    public String compile() throws SassCompilationException {
+
+        final SassLibrary.Sass_Compiler $compiler = this.createCompiler();
+        final int parseStatus = SassLibrary.INSTANCE.sass_compiler_parse($compiler);
+        final int compileStatus = SassLibrary.INSTANCE.sass_compiler_execute($compiler);
+        final String output = SassLibrary.INSTANCE.sass_context_get_output_string(this.$context);
+
+        // Deletes the underlying native compiler object and releases allocated memory.
+        SassLibrary.INSTANCE.sass_delete_compiler($compiler);
+
+        // Error handling.
+        if (parseStatus != 0) { this.throwCompilationException(parseStatus); }
+        if (compileStatus != 0) { this.throwCompilationException(compileStatus); }
+
+        // Writes the result to the output stream.
+        return output;
+    }
+
+    /**
+     * Creates a native Sass compiler instance.
+     * <p>This instance will be used in the various compile methods that are part of the
+     * public API.</p>
+     * @return
+     *     Native Sass compiler instance.
+     */
+    @Nonnull
+    protected abstract SassLibrary.Sass_Compiler createCompiler();
 
     /**
      * Returns the options associated with this Sass context.
