@@ -10,7 +10,7 @@ To use the library in your Maven based projects just add the following lines to 
 ```xml
 <dependency>
   <groupId>com.cathive.sass</groupId>
-  <artifactId>com.cathive.sass</artifactId>
+  <artifactId>sass-java</artifactId>
   <version>${sass-java.version}</version>
 </dependency>
 ```
@@ -24,11 +24,11 @@ Compiled dynamic libraries of libsass are bundled inside of the JAR artifact tog
 This is the list of platforms that are directly supported, because the dynamic library has been pre-compiled and bundled:
 
 - [x] Linux x86-64
-- [ ] Linux x86
-- [x] Mac OS X x86-64
+- [x] Linux x86
+- [ ] Mac OS X x86-64
 - [ ] Mac OS X x86
-- [x] Windows x86-64
-- [x] Windows x86
+- [ ] Windows x86-64
+- [ ] Windows x86
 
 If your desired platform / architecture is missing, feel free to open an issue and add a pre-compiled version of libsass for inclusion!
 

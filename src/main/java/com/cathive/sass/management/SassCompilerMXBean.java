@@ -41,9 +41,6 @@ public interface SassCompilerMXBean {
      * @param outputPath
      *     Path to the output file. Can be {@code null} to skip the output
      *     file creation. (The result will just be returned by this method then).
-     * @param imagePath
-     *     Image path for the Sass image include function. Can be {@code null}
-     *     if you don't intend to use the include function.
      * @param includePath
      *     All include paths that shall be searched when using {@code @import} statements
      *     inside your SCSS files.
@@ -55,6 +52,6 @@ public interface SassCompilerMXBean {
      *     If reading of the input file(s) or writing of the output file
      *     fails.
      */
-    String compile(@Nonnull String inputPath, @Nullable String outputPath, @Nullable String imagePath, @Nullable String[] includePath) throws IOException;
+    String compile(@Nonnull String inputPath, @Nullable String outputPath, @Nullable String[] includePath) throws IOException;
 
 }

@@ -19,6 +19,10 @@ package com.cathive.sass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 
 /**
@@ -30,11 +34,11 @@ public class SassDataContextTest {
     @Ignore("The Sass data context seems to be defunct right now. :-(")
     @Test
     public void testCompiler() throws Exception {
-        final SassDataContext context = SassDataContext.create("div { a { color: blue; } }");
+        final SassDataContext context = SassDataContext.create("div { background-color: red; }");
         context.getOptions().setPrecission(10);
-        context.getOptions().setSourceComments(true);
-        context.getOptions().setInputPath(Paths.get("/tmp", "simple.scss"));
-        context.getOptions().setOutputPath(Paths.get("/tmp"));
+        //context.getOptions().setSourceComments(true);
+        //context.getOptions().setInputPath(Paths.get("/tmp", "simple.scss"));
+        //context.getOptions().setOutputPath(Paths.get("/tmp"));
         context.compile(System.out);
     }
 

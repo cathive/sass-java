@@ -16,20 +16,16 @@
 
 package com.cathive.sass;
 
-import com.google.common.io.ByteStreams;
 import com.cathive.sass.jna.SassLibrary;
 import com.cathive.sass.jna.SassLibrary.Sass_Compiler;
 import com.cathive.sass.jna.SassLibrary.Sass_Data_Context;
+import com.google.common.io.ByteStreams;
 
 import javax.annotation.Nonnull;
 import javax.annotation.WillClose;
-import javax.annotation.WillNotClose;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 import java.util.logging.Logger;
 
 /**
@@ -49,6 +45,17 @@ public class SassDataContext extends SassContext {
     }
 
     /**
+     * Creates a new Sass context object from the given byte buffer.
+     * @param sourceBuffer
+     *     Byte buffer to be read. Must produce a valid SCSS document when read.
+     * @return
+     *     A new Sass data context.
+     */
+    public static SassDataContext create(@Nonnull final ByteBuffer sourceBuffer) {
+        return new SassDataContext(SassLibrary.INSTANCE.sass_make_data_context(sourceBuffer));
+    }
+
+    /**
      * Creates a new Sass context object from the given input stream.
      * The input stream must produce a valid SCSS document when read.
      * @param inputStream
@@ -61,9 +68,7 @@ public class SassDataContext extends SassContext {
     public static SassDataContext create(@WillClose @Nonnull final InputStream inputStream) throws IOException {
         final SassDataContext dataContext;
         try {
-            final byte[] sourceBytes = ByteStreams.toByteArray(inputStream);
-            final ByteBuffer sourceString = ByteBuffer.wrap(sourceBytes);
-            dataContext = new SassDataContext(SassLibrary.INSTANCE.sass_make_data_context(sourceString));
+            dataContext = create(ByteBuffer.wrap(ByteStreams.toByteArray(inputStream)));
         } finally {
             inputStream.close();
         }
@@ -71,7 +76,7 @@ public class SassDataContext extends SassContext {
     }
 
     public static SassDataContext create(@Nonnull final String inputString) throws IOException {
-        return create(new ByteArrayInputStream(inputString.getBytes(Charset.forName("UTF-8"))));
+        return create(ByteBuffer.wrap(inputString.getBytes()));
     }
 
     @Override

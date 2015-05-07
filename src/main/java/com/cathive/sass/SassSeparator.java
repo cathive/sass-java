@@ -30,7 +30,7 @@ public enum SassSeparator {
     /** Separator character primitive char value. */
     private final char charValue;
 
-    private SassSeparator(final char charValue) {
+    SassSeparator(final char charValue) {
         this.charValue = charValue;
     }
 

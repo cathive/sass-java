@@ -26,9 +26,11 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Properties;
 
@@ -135,7 +137,6 @@ public class SassLibraryTest {
         SassLibrary.INSTANCE.sass_option_set_input_path(options, "/tmp/input/styles.scss");
         SassLibrary.INSTANCE.sass_option_set_output_path(options, "/tmp/output");
         SassLibrary.INSTANCE.sass_option_set_include_path(options, "/tmp/input");
-        SassLibrary.INSTANCE.sass_option_set_image_path(options, "/tmp/input");
         SassLibrary.INSTANCE.sass_option_set_precision(options, 10);
         SassLibrary.INSTANCE.sass_option_set_source_comments(options, (byte) 1);
         SassLibrary.INSTANCE.sass_option_set_output_style(options, Sass_Output_Style.SASS_STYLE_NESTED);

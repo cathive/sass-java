@@ -20,9 +20,6 @@ import com.cathive.sass.jna.SassLibrary;
 import com.cathive.sass.jna.SassLibrary.Sass_File_Context;
 
 import javax.annotation.Nonnull;
-import javax.annotation.WillNotClose;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.file.Path;
 
 /**

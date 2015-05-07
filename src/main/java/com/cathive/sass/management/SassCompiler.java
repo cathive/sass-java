@@ -72,16 +72,13 @@ public class SassCompiler implements SassCompilerMXBean,
     }
 
     @Override
-    public String compile(final @Nonnull String inputPath, final @Nullable String outputPath, final @Nullable String imagePath, final @Nullable String[] includePath) throws IOException {
+    public String compile(final @Nonnull String inputPath, final @Nullable String outputPath, final @Nullable String[] includePath) throws IOException {
 
         final SassContext context = SassFileContext.create(Paths.get(inputPath));
         final SassOptions options = context.getOptions();
 
         if (outputPath != null) {
             options.setOutputPath(Paths.get(outputPath));
-        }
-        if (imagePath != null) {
-            options.setImagePath(Paths.get(imagePath));
         }
         if (includePath != null) {
             options.setIncludePath(includePath);
@@ -136,12 +133,12 @@ public class SassCompiler implements SassCompilerMXBean,
             tee.write(b);
         }
         @Override
-        public void write(final byte[] b) throws IOException {
+        public void write(@Nonnull final byte[] b) throws IOException {
             out.write(b);
             tee.write(b);
         }
         @Override
-        public void write(final byte[] b, final int off, final int len) throws IOException {
+        public void write(@Nonnull final byte[] b, final int off, final int len) throws IOException {
             out.write(b, off, len);
             tee.write(b, off, len);
         }

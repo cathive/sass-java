@@ -61,7 +61,7 @@ public enum SassOutputStyle {
      * @param intValue
      *     Numeric representation of the enum as seen in native code.
      */
-    private SassOutputStyle(final int intValue) {
+    SassOutputStyle(final int intValue) {
         this.intValue = intValue;
     }
 

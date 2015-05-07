@@ -157,18 +157,6 @@ public class SassOptions {
         return Paths.get(SassLibrary.INSTANCE.sass_option_get_output_path(this.$options));
     }
 
-    public void setImagePath(@Nonnull final Path imagePath) {
-        this.setImagePath(imagePath.toFile().getAbsolutePath());
-    }
-
-    public void setImagePath(@Nonnull final String imagePath) {
-        SassLibrary.INSTANCE.sass_option_set_image_path(this.$options, imagePath);
-    }
-
-    public Path getImagePath() {
-        return Paths.get(SassLibrary.INSTANCE.sass_option_get_image_path(this.$options));
-    }
-
     public void setIncludePath(@Nonnull final Path... includePath) {
         final Collection<String> includePathCollection = transform(asList(includePath), new Function<Path, String>() {
             @Nonnull
@@ -238,6 +226,18 @@ public class SassOptions {
 
     public Path getSourceMapFile() {
         return Paths.get(SassLibrary.INSTANCE.sass_option_get_source_map_file(this.$options));
+    }
+
+    public void setSourceMapRoot(@Nonnull final Path sourceMapRoot) {
+        this.setSourceMapRoot(sourceMapRoot.toFile().getAbsolutePath());
+    }
+
+    public void setSourceMapRoot(@Nonnull final String sourceMapRoot) {
+        SassLibrary.INSTANCE.sass_option_set_source_map_root(this.$options, sourceMapRoot);
+    }
+
+    public Path getSourceMapRoot() {
+        return Paths.get(SassLibrary.INSTANCE.sass_option_get_source_map_root(this.$options));
     }
 
 }

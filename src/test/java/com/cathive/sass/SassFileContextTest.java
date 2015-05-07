@@ -90,7 +90,6 @@ public class SassFileContextTest {
         final SassContext context = SassFileContext.create(this.complexScssPath);
         context.getOptions().setIncludePath(this.includes1Path, this.includes2Path);
         context.getOptions().setOutputStyle(SassOutputStyle.NESTED);
-        context.getOptions().setImagePath("test");
         context.compile(System.out);
     }
 

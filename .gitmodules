@@ -1,6 +1,3 @@
 [submodule "src/main/native/libsass"]
 	path = src/main/native/libsass
 	url = https://github.com/sass/libsass.git
-[submodule "src/main/native/sassc"]
-	path = src/main/native/sassc
-	url = https://github.com/sass/sassc.git

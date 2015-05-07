@@ -33,7 +33,7 @@ public enum SassTag {
     /** Sass tag primitive int value. */
     private final int intValue;
 
-    private SassTag(final int intValue) {
+    SassTag(final int intValue) {
         this.intValue = intValue;
     }
 

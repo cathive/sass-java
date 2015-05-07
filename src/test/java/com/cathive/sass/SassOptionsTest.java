@@ -93,12 +93,6 @@ public class SassOptionsTest {
         options.setOutputPath(Paths.get("/my/other/path2"));
         assertEquals(Paths.get("/my", "other", "path2").toAbsolutePath(), options.getOutputPath().toAbsolutePath());
 
-        // Image path
-        options.setImagePath(Paths.get("/my/path1"));
-        assertEquals(Paths.get("/my/path1").toAbsolutePath(), options.getImagePath().toAbsolutePath());
-        options.setImagePath(Paths.get("/my/other/path2"));
-        assertEquals(Paths.get("/my", "other", "path2").toAbsolutePath(), options.getImagePath().toAbsolutePath());
-
         // includePath functionality
         assertEquals(0, options.getIncludePath().size());
         options.setIncludePath("/path1", "/path2");

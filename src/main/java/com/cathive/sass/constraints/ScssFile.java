@@ -21,8 +21,6 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 import static java.lang.annotation.ElementType.*;
-import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * The annotated element must denote a valid SCSS file.
@@ -54,7 +52,7 @@ public @interface ScssFile {
          * @see com.cathive.sass.constraints.ScssFile
          */
         @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
-        @Retention(RUNTIME)
+        @Retention(RetentionPolicy.RUNTIME)
         @Documented
         @interface List {
                 ScssFile[] value();
