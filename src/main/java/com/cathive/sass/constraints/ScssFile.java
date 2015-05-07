@@ -20,8 +20,6 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
-import static java.lang.annotation.ElementType.*;
-
 /**
  * The annotated element must denote a valid SCSS file.
  * <p>Supported types are:
@@ -36,7 +34,7 @@ import static java.lang.annotation.ElementType.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Constraint(validatedBy = {
-        ScssFileValidation.ScssFilePathValidator.class,
+        ScssFileValidation.ScssFileFileValidator.class,
         ScssFileValidation.ScssFilePathValidator.class
 })
 public @interface ScssFile {
@@ -51,7 +49,7 @@ public @interface ScssFile {
          * Defines several {@link ScssFile} annotations on the same element.
          * @see com.cathive.sass.constraints.ScssFile
          */
-        @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+        @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.PARAMETER })
         @Retention(RetentionPolicy.RUNTIME)
         @Documented
         @interface List {
