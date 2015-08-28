@@ -25,14 +25,11 @@ This is the list of platforms that are directly supported, because the dynamic l
 
 - [x] Linux x86-64
 - [x] Linux x86
-- [ ] Mac OS X x86-64
-- [ ] Mac OS X x86
-- [ ] Windows x86-64
-- [ ] Windows x86
+- [x] Mac OS X x86-64
+- [x] Windows x86-64
+- [x] Windows x86
 
 If your desired platform / architecture is missing, feel free to open an issue and add a pre-compiled version of libsass for inclusion!
-
-As of now the following
 
 ## Example code
 

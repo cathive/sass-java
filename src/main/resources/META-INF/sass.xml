@@ -24,6 +24,6 @@
     The version definitions in this file must match the compiled native binaries
     that have been bundled with sass-java.
   </comment>
-  <entry key="libsass.version">3.2.2</entry>
+  <entry key="libsass.version">3.2.5</entry>
   <entry key="sass2scss.version">1.0.3</entry>
 </properties>

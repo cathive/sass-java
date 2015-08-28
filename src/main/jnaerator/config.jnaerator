@@ -1,5 +1,5 @@
 -library sass
--DLIBSASS_VERSION="3.2.2"
+-DLIBSASS_VERSION="3.2.5"
 -package com.cathive.sass.jna
 -I$(DIR)/../native/libsassh
 $(DIR)/../native/libsass/sass.h

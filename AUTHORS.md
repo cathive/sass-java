@@ -1,2 +1,4 @@
-## Developers
+Developers
+==========
+
 * Benjamin P. Jung
