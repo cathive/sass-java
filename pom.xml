@@ -100,8 +100,10 @@
                     <archive>
                         <index>true</index>
                         <manifest>
+                            <addClasspath>true</addClasspath>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                             <addDefaultSpecificationEntries>false</addDefaultSpecificationEntries>
+                            <mainClass>com.cathive.sass.SassJ</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -116,6 +118,25 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>sassj-${project.version}</finalName>
+                            <keepDependenciesWithProvidedScope>true</keepDependenciesWithProvidedScope>
+                            <minimizeJar>true</minimizeJar>
+                            <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
+                            <shadedArtifactId>sassj</shadedArtifactId>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
