@@ -23,6 +23,7 @@ import java.io.OutputStream;
 import org.apache.tools.ant.Task;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import org.apache.tools.ant.BuildException;
@@ -42,19 +43,19 @@ public class SassTask extends Task {
     private Boolean isIndentedSyntaxSrc = null;
     private String sourceMapFile = null;
     private String sourceMapRoot = null;
-    private File outdir = null;
+    private File ouputPath = null;
     private File in = null;
-    private final Collection<Path> includesPaths = new HashSet<Path>();
+    private final Collection<org.apache.tools.ant.types.Path> paths = new ArrayList<org.apache.tools.ant.types.Path>();
     private String extension = ".scss";
 
     /**
      * Set the output directory where the compiled css will be placed.
      *
-     * @param outdir root directory that will contain the output.
+     * @param outputPath root directory that will contain the output.
      */
-    public void setOutdir(final String outdir) {
-        if (outdir != null) {
-            this.outdir = new File(outdir);
+    public void setOutdir(final String outputPath) {
+        if (outputPath != null && !outputPath.trim().isEmpty()) {
+            this.ouputPath = new File(outputPath);
         }
     }
 
@@ -109,15 +110,15 @@ public class SassTask extends Task {
         this.omitSourceMapUrl = omitSourceMapUrl;
     }
 
-    public void setIsIndentedSyntaxSrc(final boolean isIndentedSyntaxSrc) {
+    public void setIsindentedsyntaxsrc(final boolean isIndentedSyntaxSrc) {
         this.isIndentedSyntaxSrc = isIndentedSyntaxSrc;
     }
 
-    public void setSourceMapFile(final String sourceMapFile) {
+    public void setSourcemapfile(final String sourceMapFile) {
         this.sourceMapFile = sourceMapFile;
     }
 
-    public void setSourceMapRoot(final String sourceMapRoot) {
+    public void setSourcemaproot(final String sourceMapRoot) {
         this.sourceMapRoot = sourceMapRoot;
     }
 
@@ -132,23 +133,12 @@ public class SassTask extends Task {
     }
 
     /**
-     * Add a path which references one or more scss include directories.
+     * Add a path which references one or more sass include directories.
      *
      * @param path The path to add.
      */
     public void addPath(final org.apache.tools.ant.types.Path path) {
-        addIncludePaths(path.list());
-    }
-
-    /**
-     * Add include directories.
-     *
-     * @param paths One or more include directory paths.
-     */
-    void addIncludePaths(String[] paths) {
-        for (String path : paths) {
-            includesPaths.add(Paths.get(path));
-        }
+        paths.add(path);
     }
 
     /**
@@ -160,17 +150,17 @@ public class SassTask extends Task {
      */
     private OutputStream getOutput(final File inputFile) {
         OutputStream result = null;
-        if (outdir != null) {
+        if (ouputPath != null) {
             try {
-                if (!outdir.exists()) {
-                    outdir.mkdirs();
+                if (!ouputPath.exists()) {
+                    ouputPath.mkdirs();
                 }
                 String filename = inputFile.getName();
                 if (filename.indexOf(".") > 0) {
                     filename = filename.substring(0, filename.lastIndexOf("."));
                 }
                 filename += OUTPUT_EXTENSION;
-                Path output = outdir.toPath().resolve(filename);
+                Path output = ouputPath.toPath().resolve(filename);
                 File outputFile = output.toFile();
                 if (!outputFile.exists()) {
                     result = new FileOutputStream(outputFile);
@@ -184,6 +174,22 @@ public class SassTask extends Task {
             throw new BuildException("outdir must be set");
         }
         return result;
+    }
+
+    /**
+     * Gets the include directories.
+     *
+     * @return A collection of include directories.
+     */
+    private Collection<Path> getIncludeDirs() {
+        Collection<Path> includes = new HashSet<Path>();
+        for (org.apache.tools.ant.types.Path path : paths) {
+            String[] pathElements = path.list();
+            for (String pathElement : pathElements) {
+                includes.add(Paths.get(pathElement));
+            }
+        }
+        return includes;
     }
 
     /**
@@ -220,8 +226,9 @@ public class SassTask extends Task {
      * @param options
      */
     private void setOptions(final SassOptions options) {
-        if (!includesPaths.isEmpty()) {
-            options.setIncludePath(includesPaths);
+
+        if (!paths.isEmpty()) {
+            options.setIncludePath(getIncludeDirs());
         }
         if (precision != null) {
             options.setPrecission(precision);
@@ -261,10 +268,10 @@ public class SassTask extends Task {
                     SassContext context = SassFileContext.create(inputFile.toPath());
                     setOptions(context.getOptions());
                     try {
-                        try (OutputStream out = getOutput(inputFile)) {
-                            if (out != null) {
+                        try (OutputStream outputStream = getOutput(inputFile)) {
+                            if (outputStream != null) {
                                 System.out.println("Compiling " + inputFile.getCanonicalPath());
-                                context.compile(out);
+                                context.compile(outputStream);
                             }
                         }
                     } catch (SassCompilationException | IOException ex) {

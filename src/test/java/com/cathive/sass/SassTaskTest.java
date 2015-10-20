@@ -18,38 +18,45 @@ package com.cathive.sass;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
+import java.util.Properties;
 import org.junit.Test;
+import org.apache.tools.ant.BuildFileTest;
+import org.junit.Assert;
 
 /**
- *
- * @author rick
+ * @see com.cathive.sass.SassTask
  */
-public class SassTaskTest {
+public class SassTaskTest extends BuildFileTest {
 
-    private java.nio.file.Path workingDirectory;
-    private java.nio.file.Path simpleScssPath;
-    private java.nio.file.Path complexScssPath;
-    private java.nio.file.Path includes1Path;
-    private java.nio.file.Path includes2Path;
+    private Path workingDirectory;
+    private Path simpleScssPath;
+    private Path complexScssPath;
+    private Path includes1Path;
+    private Path includes2Path;
+    private Path buildFilePath;
 
-    @Before
-    public void init() throws Exception {
+    public SassTaskTest(final String name) {
+        super(name);
+    }
 
+    @Override
+    public void setUp() throws Exception {
         this.workingDirectory = Files.createTempDirectory("sass-java");
         this.simpleScssPath = this.workingDirectory.resolve("simple.scss");
         this.complexScssPath = this.workingDirectory.resolve("complex.scss");
         this.includes1Path = this.workingDirectory.resolve("includes1");
         this.includes2Path = this.workingDirectory.resolve("includes2");
+        this.buildFilePath = this.workingDirectory.resolve("build.xml");
+
+        Properties props = System.getProperties();
+        props.setProperty("sass-java.test.workingdir", this.workingDirectory.toString());
 
         // Copies all the stuff that is needed for our tests to the temporary directory.
         Files.copy(this.getClass().getClassLoader().getResourceAsStream("simple.scss"), this.simpleScssPath);
         Files.copy(this.getClass().getClassLoader().getResourceAsStream("complex.scss"), this.complexScssPath);
-
 
         Files.createDirectories(includes1Path);
         Files.createDirectories(includes2Path);
@@ -57,17 +64,19 @@ public class SassTaskTest {
         Files.copy(this.getClass().getClassLoader().getResourceAsStream("includes1/_common.scss"), includes1Path.resolve("_common.scss"));
         Files.copy(this.getClass().getClassLoader().getResourceAsStream("includes2/_variables2.scss"), includes2Path.resolve("_variables2.scss"));
         Files.copy(this.getClass().getClassLoader().getResourceAsStream("includes2/_common.scss"), includes2Path.resolve("_common.scss"));
-
+        Files.copy(this.getClass().getClassLoader().getResourceAsStream("build.xml"), this.buildFilePath);
+        configureProject(this.buildFilePath.toString());
     }
 
-    @After
-    public void shutdown() throws Exception {
+    @Override
+    public void tearDown() throws Exception {
         Files.walkFileTree(this.workingDirectory, new SimpleFileVisitor<java.nio.file.Path>() {
             @Override
             public FileVisitResult visitFile(java.nio.file.Path file, BasicFileAttributes attrs) throws IOException {
                 Files.delete(file);
                 return FileVisitResult.CONTINUE;
             }
+
             @Override
             public FileVisitResult postVisitDirectory(java.nio.file.Path dir, IOException exc) throws IOException {
                 Files.delete(dir);
@@ -78,14 +87,13 @@ public class SassTaskTest {
 
     @Test
     public void testExecute() {
-        SassTask instance = new SassTask();
-        instance.addIncludePaths(new String[]{this.includes1Path.toString(), this.includes2Path.toString()});
-        instance.setOutdir(this.workingDirectory.toString());
-        instance.setIn(this.complexScssPath.toString());
-        instance.setOutputstyle(0);
-        instance.execute();
-        java.nio.file.Path expected = this.workingDirectory.resolve("complex.css");
-        Assert.assertTrue(expected.toFile().exists());
+        executeTarget("test");
+
+        Path outputPath = this.workingDirectory.resolve("output");
+        Path expectedComplex = outputPath.resolve("complex.css");
+        Path expectedSimple = outputPath.resolve("simple.css");
+        Assert.assertTrue(expectedComplex.toFile().exists());
+        Assert.assertTrue(expectedSimple.toFile().exists());
     }
 
 }
