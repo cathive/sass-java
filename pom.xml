@@ -74,6 +74,19 @@
                 <role>Developer</role>
             </roles>
         </developer>
+        <developer>
+            <id>ricksbrown</id>
+            <name>Rick S. Brown</name>
+            <email>ricksbrown73@gmail.com</email>
+            <url>https://github.com/ricksbrown</url>
+            <timezone>AEST</timezone>
+            <properties>
+                <github.username>ricksbrown</github.username>
+            </properties>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
     </developers>
     <build>
         <plugins>
@@ -252,13 +265,13 @@
         <dependency>
             <groupId>org.apache.ant</groupId>
             <artifactId>ant</artifactId>
-            <version>1.9.2</version>
+            <version>1.9.6</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.ant</groupId>
             <artifactId>ant-testutil</artifactId>
-            <version>1.9.2</version>
+            <version>1.9.6</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

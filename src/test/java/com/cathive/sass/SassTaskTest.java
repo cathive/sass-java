@@ -22,14 +22,18 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Properties;
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.BuildFileRule;
+import org.junit.After;
 import org.junit.Test;
-import org.apache.tools.ant.BuildFileTest;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
 
 /**
  * @see com.cathive.sass.SassTask
  */
-public class SassTaskTest extends BuildFileTest {
+public class SassTaskTest {
 
     private Path workingDirectory;
     private Path simpleScssPath;
@@ -38,11 +42,10 @@ public class SassTaskTest extends BuildFileTest {
     private Path includes2Path;
     private Path buildFilePath;
 
-    public SassTaskTest(final String name) {
-        super(name);
-    }
+    @Rule
+    public final BuildFileRule buildRule = new BuildFileRule();
 
-    @Override
+    @Before
     public void setUp() throws Exception {
         this.workingDirectory = Files.createTempDirectory("sass-java");
         this.simpleScssPath = this.workingDirectory.resolve("simple.scss");
@@ -65,10 +68,10 @@ public class SassTaskTest extends BuildFileTest {
         Files.copy(this.getClass().getClassLoader().getResourceAsStream("includes2/_variables2.scss"), includes2Path.resolve("_variables2.scss"));
         Files.copy(this.getClass().getClassLoader().getResourceAsStream("includes2/_common.scss"), includes2Path.resolve("_common.scss"));
         Files.copy(this.getClass().getClassLoader().getResourceAsStream("build.xml"), this.buildFilePath);
-        configureProject(this.buildFilePath.toString());
+        buildRule.configureProject(this.buildFilePath.toString());
     }
 
-    @Override
+    @After
     public void tearDown() throws Exception {
         Files.walkFileTree(this.workingDirectory, new SimpleFileVisitor<java.nio.file.Path>() {
             @Override
@@ -87,7 +90,7 @@ public class SassTaskTest extends BuildFileTest {
 
     @Test
     public void testExecute() {
-        executeTarget("test");
+        buildRule.executeTarget("test");
         Path outputPath = this.workingDirectory.resolve("output");
         Path expectedComplex = outputPath.resolve("complex.css");
         Path expectedSimple = outputPath.resolve("simple.css");
@@ -97,6 +100,11 @@ public class SassTaskTest extends BuildFileTest {
 
     @Test
     public void testExecuteMissingIn() {
-        expectBuildException("testInMissing", "");
+        try {
+            buildRule.executeTarget("testInMissing");
+            Assert.fail("BuildException should have been thrown");
+        } catch (BuildException ex) {
+            Assert.assertEquals("'in' must be set", ex.getMessage());
+        }
     }
 }

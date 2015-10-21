@@ -126,7 +126,7 @@ This example shows how to invoke sass-java from Ant using the bundled Ant task a
         <dependency>
             <groupId>org.apache.ant</groupId>
             <artifactId>ant</artifactId>
-            <version>1.9.3</version>
+            <version>1.9.6</version>
         </dependency>
     </dependencies>
 </plugin>

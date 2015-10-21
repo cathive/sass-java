@@ -43,9 +43,9 @@ public class SassTask extends Task {
     private Boolean isIndentedSyntaxSrc = null;
     private String sourceMapFile = null;
     private String sourceMapRoot = null;
-    private File ouputPath = null;
+    private File outputPath = null;
     private File in = null;
-    private final Collection<org.apache.tools.ant.types.Path> paths = new ArrayList<org.apache.tools.ant.types.Path>();
+    private final Collection<org.apache.tools.ant.types.Path> paths = new ArrayList<>();
     private String extension = ".scss";
 
     /**
@@ -55,7 +55,7 @@ public class SassTask extends Task {
      */
     public void setOutdir(final String outputPath) {
         if (outputPath != null && !outputPath.trim().isEmpty()) {
-            this.ouputPath = new File(outputPath);
+            this.outputPath = new File(outputPath);
         }
     }
 
@@ -150,17 +150,17 @@ public class SassTask extends Task {
      */
     private OutputStream getOutput(final File inputFile) {
         OutputStream result = null;
-        if (ouputPath != null) {
+        if (outputPath != null) {
             try {
-                if (!ouputPath.exists()) {
-                    ouputPath.mkdirs();
+                if (!outputPath.exists()) {
+                    outputPath.mkdirs();
                 }
                 String filename = inputFile.getName();
                 if (filename.indexOf(".") > 0) {
                     filename = filename.substring(0, filename.lastIndexOf("."));
                 }
                 filename += OUTPUT_EXTENSION;
-                Path output = ouputPath.toPath().resolve(filename);
+                Path output = outputPath.toPath().resolve(filename);
                 File outputFile = output.toFile();
                 if (!outputFile.exists()) {
                     result = new FileOutputStream(outputFile);
@@ -182,7 +182,7 @@ public class SassTask extends Task {
      * @return A collection of include directories.
      */
     private Collection<Path> getIncludeDirs() {
-        Collection<Path> includes = new HashSet<Path>();
+        Collection<Path> includes = new HashSet<>();
         for (org.apache.tools.ant.types.Path path : paths) {
             String[] pathElements = path.list();
             for (String pathElement : pathElements) {
