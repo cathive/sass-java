@@ -88,7 +88,6 @@ public class SassTaskTest extends BuildFileTest {
     @Test
     public void testExecute() {
         executeTarget("test");
-
         Path outputPath = this.workingDirectory.resolve("output");
         Path expectedComplex = outputPath.resolve("complex.css");
         Path expectedSimple = outputPath.resolve("simple.css");
@@ -96,4 +95,8 @@ public class SassTaskTest extends BuildFileTest {
         Assert.assertTrue(expectedSimple.toFile().exists());
     }
 
+    @Test
+    public void testExecuteMissingIn() {
+        expectBuildException("testInMissing", "");
+    }
 }

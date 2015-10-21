@@ -278,10 +278,10 @@ public class SassTask extends Task {
                         throw new BuildException(ex);
                     }
                 } else {
-                    System.out.println("Could not read " + inputFile.getAbsolutePath());
+                    throw new BuildException("Could not read " + inputFile.getAbsolutePath());
                 }
             } else {
-                System.out.println("Could not find " + inputFile.getAbsolutePath());
+                throw new BuildException("Could not find " + inputFile.getAbsolutePath());
             }
         }
     }

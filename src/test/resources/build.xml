@@ -1,32 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="test" name="SassTaskTest">
-<path id="classpath.run">
-    <path path="${java.class.path}"/>
-    <path location="${ant.project.name}.jar"/>
-</path>
-
-<path id="classpath.test">
-    <path refid="classpath.run"/>
-    <path location="${ant.test.lib}"/>
-</path>
-
-<taskdef name="sass" classname="com.cathive.sass.SassTask" classpathref="classpath.test"/>
-
-<property name="sass-java.test.workingdir" location="${java.io.tmpdir}"/><!-- This should actually be overridden by calling test -->
-<property name="output.dir" location="${sass-java.test.workingdir}/output"/>
-
-<target name="clean" description="Delete output directory">
-    <delete failonerror="false" includeEmptyDirs="true">
-        <fileset dir="${output.dir}"/>
-    </delete>
-</target>
-
-<target name="test" depends="clean">
-    <sass outdir="${output.dir}" in="${sass-java.test.workingdir}">
-        <path>
-            <pathelement location="${sass-java.test.workingdir}/includes1"/>
-            <pathelement location="${sass-java.test.workingdir}/includes2"/>
-        </path>
-    </sass>
-</target>
+    <path id="classpath.run">
+        <path path="${java.class.path}"/>
+        <path location="${ant.project.name}.jar"/>
+    </path>
+    
+    <path id="classpath.test">
+        <path refid="classpath.run"/>
+        <path location="${ant.test.lib}"/>
+    </path>
+    
+    <taskdef name="sass" classname="com.cathive.sass.SassTask" classpathref="classpath.test"/>
+    
+    <property name="sass-java.test.workingdir" location="${java.io.tmpdir}"/><!-- This should actually be overridden by calling test -->
+    <property name="output.dir" location="${sass-java.test.workingdir}/output"/>
+    
+    <target name="clean" description="Delete output directory">
+        <delete failonerror="false" includeEmptyDirs="true">
+            <fileset dir="${output.dir}"/>
+        </delete>
+    </target>
+    
+    <target name="test" depends="clean">
+        <sass outdir="${output.dir}" in="${sass-java.test.workingdir}">
+            <path>
+                <pathelement location="${sass-java.test.workingdir}/includes1"/>
+                <pathelement location="${sass-java.test.workingdir}/includes2"/>
+            </path>
+        </sass>
+    </target>
+    
+    <target name="testInMissing" depends="clean">
+        <sass outdir="${output.dir}">
+            <path>
+                <pathelement location="${sass-java.test.workingdir}/includes1"/>
+                <pathelement location="${sass-java.test.workingdir}/includes2"/>
+            </path>
+        </sass>
+    </target>
 </project>

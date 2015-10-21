@@ -83,7 +83,7 @@ class SimpleSassExample {
 
 }
 ```
-## As an Ant Task
+## Ant Task Example
 
 This example shows how to invoke sass-java from Ant using the bundled Ant task and the maven-antrun-plugin.
 
