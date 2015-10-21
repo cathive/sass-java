@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Not used in automated tests but you can run an Ant build and see how it goes.
--->
 <project basedir="." default="test" name="SassTaskTest">
 <path id="classpath.run">
     <path path="${java.class.path}"/>
