@@ -151,6 +151,6 @@ This example shows how to invoke sass-java from Ant using the bundled Ant task a
 
 `isindentedsyntaxsrc` (true/false)
 
-`sourcemapfile` (true/false)
+`sourcemapfile` (Path to source map file)
 
-`sourcemaproot` (true/false)
+`sourcemaproot` (Directly inserted in source maps)

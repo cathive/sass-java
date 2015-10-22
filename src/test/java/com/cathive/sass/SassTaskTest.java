@@ -90,12 +90,7 @@ public class SassTaskTest {
 
     @Test
     public void testExecute() {
-        buildRule.executeTarget("test");
-        Path outputPath = this.workingDirectory.resolve("output");
-        Path expectedComplex = outputPath.resolve("complex.css");
-        Path expectedSimple = outputPath.resolve("simple.css");
-        Assert.assertTrue(expectedComplex.toFile().exists());
-        Assert.assertTrue(expectedSimple.toFile().exists());
+        testTask("test");
     }
 
     @Test
@@ -106,5 +101,60 @@ public class SassTaskTest {
         } catch (BuildException ex) {
             Assert.assertEquals("'in' must be set", ex.getMessage());
         }
+    }
+
+    @Test
+    public void testWithPrecision() {
+        testTask("testWithPrecision");
+    }
+
+    @Test
+    public void testWithCompressedOutputstyle() {
+        testTask("testWithCompressedOutputstyle");
+    }
+
+    @Test
+    public void testWithSourcecomments() {
+        testTask("testWithSourcecomments");
+    }
+
+    @Test
+    public void testWithSourcemapembed() {
+        testTask("testWithSourcemapembed");
+    }
+
+    @Test
+    public void testWithSourcemapcontents() {
+        testTask("testWithSourcemapcontents");
+    }
+
+    @Test
+    public void testWithomitSourcemapurl() {
+        testTask("testWithomitSourcemapurl");
+    }
+
+    @Test
+    public void testWithSourcemapfile() {
+        testTask("testWithSourcemapfile");
+    }
+
+    @Test
+    public void testWithSourcemaproot() {
+        testTask("testWithSourcemaproot");
+    }
+
+    /**
+     * A helper for basic testing of Ant targets that expect to succeed.
+     * It is expected that the Ant target performs a `clean` before running.
+     *
+     * @param targetName
+     */
+    private void testTask(final String targetName) {
+        buildRule.executeTarget(targetName);
+        Path outputPath = this.workingDirectory.resolve("output");
+        Path expectedComplex = outputPath.resolve("complex.css");
+        Path expectedSimple = outputPath.resolve("simple.css");
+        Assert.assertTrue(expectedComplex.toFile().exists());
+        Assert.assertTrue(expectedSimple.toFile().exists());
     }
 }

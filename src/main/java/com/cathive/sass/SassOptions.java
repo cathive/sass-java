@@ -65,11 +65,11 @@ public class SassOptions {
         this.$options = SassLibrary.INSTANCE.sass_context_get_options(context.$context);
     }
 
-    public void setPrecission(final int precission) {
-        SassLibrary.INSTANCE.sass_option_set_precision(this.$options, precission);
+    public void setPrecision(final int precision) {
+        SassLibrary.INSTANCE.sass_option_set_precision(this.$options, precision);
     }
 
-    public int getPrecission() {
+    public int getPrecision() {
         return SassLibrary.INSTANCE.sass_option_get_precision(this.$options);
     }
 

@@ -231,7 +231,7 @@ public class SassTask extends Task {
             options.setIncludePath(getIncludeDirs());
         }
         if (precision != null) {
-            options.setPrecission(precision);
+            options.setPrecision(precision);
         }
         if (outputStyle != null) {
             options.setOutputStyle(outputStyle);

@@ -38,4 +38,76 @@
             </path>
         </sass>
     </target>
+
+    <target name="testWithPrecision" depends="clean">
+        <sass outdir="${output.dir}" in="${sass-java.test.workingdir}" precision="2">
+            <path>
+                <pathelement location="${sass-java.test.workingdir}/includes1"/>
+                <pathelement location="${sass-java.test.workingdir}/includes2"/>
+            </path>
+        </sass>
+    </target>
+
+    <target name="testWithCompressedOutputstyle" depends="clean">
+        <sass outdir="${output.dir}" in="${sass-java.test.workingdir}" outputstyle="3">
+            <path>
+                <pathelement location="${sass-java.test.workingdir}/includes1"/>
+                <pathelement location="${sass-java.test.workingdir}/includes2"/>
+            </path>
+        </sass>
+    </target>
+
+    <target name="testWithSourcecomments" depends="clean">
+        <sass outdir="${output.dir}" in="${sass-java.test.workingdir}" sourcecomments="true">
+            <path>
+                <pathelement location="${sass-java.test.workingdir}/includes1"/>
+                <pathelement location="${sass-java.test.workingdir}/includes2"/>
+            </path>
+        </sass>
+    </target>
+
+    <target name="testWithSourcemapembed" depends="clean">
+        <sass outdir="${output.dir}" in="${sass-java.test.workingdir}" sourcemapembed="true">
+            <path>
+                <pathelement location="${sass-java.test.workingdir}/includes1"/>
+                <pathelement location="${sass-java.test.workingdir}/includes2"/>
+            </path>
+        </sass>
+    </target>
+
+    <target name="testWithSourcemapcontents" depends="clean">
+        <sass outdir="${output.dir}" in="${sass-java.test.workingdir}" sourcemapcontents="true">
+            <path>
+                <pathelement location="${sass-java.test.workingdir}/includes1"/>
+                <pathelement location="${sass-java.test.workingdir}/includes2"/>
+            </path>
+        </sass>
+    </target>
+
+    <target name="testWithomitSourcemapurl" depends="clean">
+        <sass outdir="${output.dir}" in="${sass-java.test.workingdir}" omitsourcemapurl="true">
+            <path>
+                <pathelement location="${sass-java.test.workingdir}/includes1"/>
+                <pathelement location="${sass-java.test.workingdir}/includes2"/>
+            </path>
+        </sass>
+    </target>
+
+    <target name="testWithSourcemapfile" depends="clean">
+        <sass outdir="${output.dir}" in="${sass-java.test.workingdir}" sourcemapfile="${sass-java.test.workingdir}/sourcemap.map">
+            <path>
+                <pathelement location="${sass-java.test.workingdir}/includes1"/>
+                <pathelement location="${sass-java.test.workingdir}/includes2"/>
+            </path>
+        </sass>
+    </target>
+	
+	<target name="testWithSourcemaproot" depends="clean">
+        <sass outdir="${output.dir}" in="${sass-java.test.workingdir}" sourcemaproot="sourcemaproot">
+            <path>
+                <pathelement location="${sass-java.test.workingdir}/includes1"/>
+                <pathelement location="${sass-java.test.workingdir}/includes2"/>
+            </path>
+        </sass>
+    </target>
 </project>
