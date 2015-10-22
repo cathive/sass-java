@@ -83,4 +83,74 @@ class SimpleSassExample {
 
 }
 ```
+## Ant Task Example
 
+This example shows how to invoke sass-java from Ant using the bundled Ant task and the maven-antrun-plugin.
+
+```xml
+<plugin>
+    <artifactId>maven-antrun-plugin</artifactId>
+    <version>1.7</version>
+    <executions>
+        <execution>
+            <phase>generate-sources</phase>
+            <configuration>
+                <target>
+                    <path id="plugin.classpath">
+                        <path path="${maven.plugin.classpath}"/>
+                    </path>
+                    <taskdef name="sass" classname="com.cathive.sass.SassTask" classpathref="plugin.classpath"/>
+                    <delete dir="${output.dir}"/>
+                    <sass in="${sass.srcdir}" outdir="${output.dir}">
+                        <!--
+                            Note that the task takes a nested `path` element to reference any Sass include directories.
+                        -->
+                        <path>
+                            <pathelement location="${include1.dir}"/>
+                            <pathelement location="${include2.dir}"/>
+                        </path>
+                    </sass>
+                </target>
+            </configuration>
+            <goals>
+                <goal>run</goal>
+            </goals>
+        </execution>
+    </executions>
+    <dependencies>
+        <dependency>
+            <groupId>com.cathive.sass</groupId>
+            <artifactId>sass-java</artifactId>
+            <version>${sass-java.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant</artifactId>
+            <version>1.9.6</version>
+        </dependency>
+    </dependencies>
+</plugin>
+```
+
+### Ant Task Attributes
+`in` (Path to a directory that contains scss files or a single scss file)
+
+`outdir` (Directory path where the compiled css should be placed)
+
+`precision` (number)
+
+`outputstyle` (0 = nested, 1 = expanded, 2 = compact, 3 = compressed)
+
+`sourcecomments` (true/false)
+
+`sourcemapembed` (true/false)
+
+`sourcemapcontents` (true/false)
+
+`omitsourcemapurl` (true/false)
+
+`isindentedsyntaxsrc` (true/false)
+
+`sourcemapfile` (true/false)
+
+`sourcemaproot` (true/false)
