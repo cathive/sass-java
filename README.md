@@ -15,6 +15,13 @@ To use the library in your Maven based projects just add the following lines to 
 </dependency>
 ```
 
+## Versions
+
+libsass for Java uses [Semantic Versioning](http://www.semver.org/).
+MAJOR, MINOR and PATCH version are used for the library / Java binding itself.
+The BUILD METADATA component of the version is used to describe to version of the
+underlying native C/C++ libsass component.
+
 ## Native libraries
 
 Compiled dynamic libraries of libsass are bundled inside of the JAR artifact together with the required auto-generated JNA binding classes and nice wrapper classes to allow for a Java-like feeling when working with libsass.
