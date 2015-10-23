@@ -36,10 +36,10 @@ public class SassOptionsTest {
 
 
         // Precision
-        options.setPrecission(0);
-        assertEquals(0, options.getPrecission());
-        options.setPrecission(10);
-        assertEquals(10, options.getPrecission());
+        options.setPrecision(0);
+        assertEquals(0, options.getPrecision());
+        options.setPrecision(10);
+        assertEquals(10, options.getPrecision());
 
         // Output style
         options.setOutputStyle(SassOutputStyle.NESTED);

@@ -35,7 +35,7 @@ public class SassDataContextTest {
     @Test
     public void testCompiler() throws Exception {
         final SassDataContext context = SassDataContext.create("div { background-color: red; }");
-        context.getOptions().setPrecission(10);
+        context.getOptions().setPrecision(10);
         //context.getOptions().setSourceComments(true);
         //context.getOptions().setInputPath(Paths.get("/tmp", "simple.scss"));
         //context.getOptions().setOutputPath(Paths.get("/tmp"));
