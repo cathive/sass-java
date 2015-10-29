@@ -75,7 +75,8 @@ public class SassTask extends Task {
     }
 
     /**
-     * @see http://sass-lang.com/documentation/file.SASS_REFERENCE.html#style-option
+     * See <a href="http://sass-lang.com/documentation/file.SASS_REFERENCE.html#style-option">http://sass-lang.com/documentation/file.SASS_REFERENCE.html#style-option</a>
+     * for further information.
      * @param outputStyle 0 = nested, 1 = expanded, 2 = compact, 3 = compressed
      */
     public void setOutputstyle(final int outputStyle) {
@@ -88,7 +89,8 @@ public class SassTask extends Task {
     }
 
     /**
-     * @see http://sass-lang.com/documentation/file.SASS_REFERENCE.html#line_numbers-option
+     * See <a href="http://sass-lang.com/documentation/file.SASS_REFERENCE.html#line_numbers-option">http://sass-lang.com/documentation/file.SASS_REFERENCE.html#line_numbers-option</a>
+     * for further information.
      * @param sourceComments true to turn on line comments.
      */
     public void setSourcecomments(final boolean sourceComments) {
@@ -103,9 +105,6 @@ public class SassTask extends Task {
         this.sourceMapContents = sourceMapContents;
     }
 
-    /**
-     * @param omitSourceMapUrl
-     */
     public void setOmitsourcemapurl(final boolean omitSourceMapUrl) {
         this.omitSourceMapUrl = omitSourceMapUrl;
     }
@@ -224,6 +223,7 @@ public class SassTask extends Task {
      * Takes the options passed in from Ant and sets them on the SassOptions instance.
      *
      * @param options
+     *   Sass options to be used.
      */
     private void setOptions(final SassOptions options) {
 
