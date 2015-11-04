@@ -16,9 +16,7 @@
   limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.cathive</groupId>
@@ -27,7 +25,7 @@
     </parent>
     <groupId>com.cathive.sass</groupId>
     <artifactId>sass-java</artifactId>
-    <version>4.0.0+libsass-2.5.1-SNAPSHOT</version>
+    <version>4.0.0-SNAPSHOT</version>
     <name>libsass</name>
     <description>JNA wrapper around libsass</description>
     <packaging>jar</packaging>
@@ -37,6 +35,8 @@
         <maven.compiler.compilerVersion>1.7</maven.compiler.compilerVersion>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
+        <!-- Native version of  bundled libsass -->
+        <libsass-native.version>2.5.1</libsass-native.version>
     </properties>
     <licenses>
         <license>
@@ -54,7 +54,7 @@
         <connection>scm:git:https://github.com/cathive/sass-java.git</connection>
         <developerConnection>scm:git:git@github.com:cathive/sass-java.git</developerConnection>
         <url>https://github.com/cathive/sass-java/</url>
-        <tag>master</tag>
+        <tag>v4.0.0+libsass-2.5.1</tag>
     </scm>
     <ciManagement>
         <system>Travis CI</system>
@@ -119,6 +119,7 @@
                             <mainClass>com.cathive.sass.SassJ</mainClass>
                         </manifest>
                     </archive>
+                    <!--<classifier>libsass-${libsass-native.version}</classifier>-->
                 </configuration>
             </plugin>
             <plugin>
@@ -132,7 +133,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <executions>
@@ -150,7 +151,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
