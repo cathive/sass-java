@@ -52,9 +52,9 @@
     </issueManagement>
     <scm>
         <connection>scm:git:https://github.com/cathive/sass-java.git</connection>
-        <developerConnection>scm:git:git@github.com:cathive/sass-java.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/cathive/sass-java.git</developerConnection>
         <url>https://github.com/cathive/sass-java/</url>
-        <tag>v4.0.0+libsass-2.5.1</tag>
+        <tag>master</tag>
     </scm>
     <ciManagement>
         <system>Travis CI</system>
