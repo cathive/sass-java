@@ -30,6 +30,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 /**
  * @see com.cathive.sass.SassTask
  */
@@ -71,35 +74,19 @@ public class SassTaskTest {
         buildRule.configureProject(this.buildFilePath.toString());
     }
 
-    @After
-    public void tearDown() throws Exception {
-        Files.walkFileTree(this.workingDirectory, new SimpleFileVisitor<java.nio.file.Path>() {
-            @Override
-            public FileVisitResult visitFile(java.nio.file.Path file, BasicFileAttributes attrs) throws IOException {
-                Files.delete(file);
-                return FileVisitResult.CONTINUE;
-            }
-
-            @Override
-            public FileVisitResult postVisitDirectory(java.nio.file.Path dir, IOException exc) throws IOException {
-                Files.delete(dir);
-                return FileVisitResult.CONTINUE;
-            }
-        });
-    }
-
     @Test
     public void testExecute() {
         testTask("test");
     }
 
-    @Test
+    @Test(expected = BuildException.class)
     public void testExecuteMissingIn() {
         try {
             buildRule.executeTarget("testInMissing");
-            Assert.fail("BuildException should have been thrown");
-        } catch (BuildException ex) {
-            Assert.assertEquals("'in' must be set", ex.getMessage());
+            fail("BuildException should have been thrown");
+        } catch (final BuildException ex) {
+            Assert.assertEquals("\"in\" must be set", ex.getMessage());
+            throw ex;
         }
     }
 
@@ -146,15 +133,13 @@ public class SassTaskTest {
     /**
      * A helper for basic testing of Ant targets that expect to succeed.
      * It is expected that the Ant target performs a `clean` before running.
-     *
-     * @param targetName
      */
     private void testTask(final String targetName) {
         buildRule.executeTarget(targetName);
-        Path outputPath = this.workingDirectory.resolve("output");
-        Path expectedComplex = outputPath.resolve("complex.css");
-        Path expectedSimple = outputPath.resolve("simple.css");
-        Assert.assertTrue(expectedComplex.toFile().exists());
-        Assert.assertTrue(expectedSimple.toFile().exists());
+        final Path outputPath = this.workingDirectory.resolve("output");
+        final Path expectedComplex = outputPath.resolve("complex.css");
+        final Path expectedSimple = outputPath.resolve("simple.css");
+        assertTrue(expectedComplex.toFile().exists());
+        assertTrue(expectedSimple.toFile().exists());
     }
 }
