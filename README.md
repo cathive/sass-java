@@ -30,11 +30,11 @@ Compiled dynamic libraries of libsass are bundled inside of the JAR artifact tog
 
 This is the list of platforms that are directly supported, because the dynamic library has been pre-compiled and bundled:
 
-- [x] Linux x86-64
-- [x] Linux x86
-- [x] Mac OS X x86-64
-- [x] Windows x86-64
-- [x] Windows x86
+- [ ] Linux x86-64
+- [ ] Linux x86
+- [ ] Mac OS X x86-64
+- [ ] Windows x86-64
+- [ ] Windows x86
 
 If your desired platform / architecture is missing, feel free to open an issue and add a pre-compiled version of libsass for inclusion!
 

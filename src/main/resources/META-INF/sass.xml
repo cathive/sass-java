@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 
 <!--
-  Copyright (C) 2014,2015 The Cat Hive Developers.
+  Copyright (C) 2014-2016 The Cat Hive Developers.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -24,6 +24,6 @@
     The version definitions in this file must match the compiled native binaries
     that have been bundled with sass-java.
   </comment>
-  <entry key="libsass.version">3.2.5</entry>
-  <entry key="sass2scss.version">1.0.3</entry>
+  <entry key="libsass.version">${libsass.version}</entry>
+  <entry key="sass2scss.version">${sass2scss.version}</entry>
 </properties>

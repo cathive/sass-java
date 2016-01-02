@@ -16,19 +16,21 @@
 
 package com.cathive.sass;
 
+import com.cathive.sass.jna.SassLibrary;
+
 /**
  * @author Benjamin P. Jung
  */
 public enum SassTag {
-    SASS_BOOLEAN(0),
-    SASS_NUMBER(1),
-    SASS_COLOR(2),
-    SASS_STRING(3),
-    SASS_LIST(4),
-    SASS_MAP(5),
-    SASS_NULL(6),
-    SASS_ERROR(7),
-    SASS_WARNING(8);
+    SASS_BOOLEAN(SassLibrary.Sass_Tag.SASS_BOOLEAN),
+    SASS_NUMBER(SassLibrary.Sass_Tag.SASS_NUMBER),
+    SASS_COLOR(SassLibrary.Sass_Tag.SASS_COLOR),
+    SASS_STRING(SassLibrary.Sass_Tag.SASS_STRING),
+    SASS_LIST(SassLibrary.Sass_Tag.SASS_LIST),
+    SASS_MAP(SassLibrary.Sass_Tag.SASS_MAP),
+    SASS_NULL(SassLibrary.Sass_Tag.SASS_NULL),
+    SASS_ERROR(SassLibrary.Sass_Tag.SASS_ERROR),
+    SASS_WARNING(SassLibrary.Sass_Tag.SASS_WARNING);
 
     /** Sass tag primitive int value. */
     private final int intValue;

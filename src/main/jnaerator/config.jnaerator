@@ -1,11 +1,11 @@
 -library sass
--DLIBSASS_VERSION="3.2.5"
+-DLIBSASS_VERSION="3.3.2"
 -package com.cathive.sass.jna
 -I$(DIR)/../native/libsassh
 $(DIR)/../native/libsass/sass.h
 $(DIR)/../native/libsass/sass_context.h
-$(DIR)/../native/libsass/sass_values.h
 $(DIR)/../native/libsass/sass_functions.h
+$(DIR)/../native/libsass/sass_values.h
 -runtime JNA
 -beanStructs
 -preferJavac

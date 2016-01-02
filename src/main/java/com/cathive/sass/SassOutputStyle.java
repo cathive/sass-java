@@ -16,6 +16,8 @@
 
 package com.cathive.sass;
 
+import com.cathive.sass.jna.SassLibrary;
+
 /**
  * Definition of the Sass output style to be used.
  * <p>See <a href="http://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style">http://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style</a>
@@ -29,13 +31,13 @@ public enum SassOutputStyle {
      * document they’re styling. Each property has its own line, but the indentation isn’t constant.
      * Each rule is indented based on how deeply it’s nested.
      */
-    NESTED(0),
+    NESTED(SassLibrary.Sass_Output_Style.SASS_STYLE_NESTED),
 
     /**
      * Expanded is a more typical human-made CSS style, with each property and rule taking up one line.
      * Properties are indented within the rules, but the rules aren’t indented in any special way.
      */
-    EXPANDED(1),
+    EXPANDED(SassLibrary.Sass_Output_Style.SASS_STYLE_EXPANDED),
 
     /**
      * Compact style takes up less space than Nested or Expanded.
@@ -44,14 +46,14 @@ public enum SassOutputStyle {
      * Nested rules are placed next to each other with no newline, while separate groups of rules have
      * newlines between them.
      */
-    COMPACT(2),
+    COMPACT(SassLibrary.Sass_Output_Style.SASS_STYLE_COMPACT),
 
     /**
      * Compressed style takes up the minimum amount of space possible, having no whitespace except that necessary to
      * separate selectors and a newline at the end of the file. It also includes some other minor compressions, such as
      * choosing the smallest representation for colors. It’s not meant to be human-readable.
      */
-    COMPRESSED(3);
+    COMPRESSED(SassLibrary.Sass_Output_Style.SASS_STYLE_COMPRESSED);
 
     /** Numeric representation of this enum as seen in native code. */
     private final int intValue;

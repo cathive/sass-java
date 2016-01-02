@@ -16,26 +16,27 @@
 
 package com.cathive.sass;
 
+import com.cathive.sass.jna.SassLibrary;
+
 /**
  * @author Benjamin P. Jung
  */
 public enum SassSeparator {
 
     /** Comma (",") */
-    SASS_COMMA(','),
+    SASS_COMMA(SassLibrary.Sass_Separator.SASS_COMMA),
 
     /** Space (" ") */
-    SASS_SPACE(' ');
+    SASS_SPACE(SassLibrary.Sass_Separator.SASS_SPACE);
 
-    /** Separator character primitive char value. */
-    private final char charValue;
+    private final int intValue;
 
-    SassSeparator(final char charValue) {
-        this.charValue = charValue;
+    SassSeparator(final int intValue) {
+        this.intValue = intValue;
     }
 
-    char getCharValue() {
-        return this.charValue;
+    int getIntValue() {
+        return this.intValue;
     }
 
 }

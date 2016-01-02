@@ -15,18 +15,17 @@
  */
 package com.cathive.sass;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.OutputStream;
+import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
+
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import org.apache.tools.ant.BuildException;
+
+import static java.text.MessageFormat.format;
 
 /**
  * Implements an Ant task that can be used to invoke SassJava from an Ant build.
@@ -80,7 +79,7 @@ public class SassTask extends Task {
      * @param outputStyle 0 = nested, 1 = expanded, 2 = compact, 3 = compressed
      */
     public void setOutputstyle(final int outputStyle) {
-        for (SassOutputStyle sassOutputStyle : SassOutputStyle.values()) {
+        for (final SassOutputStyle sassOutputStyle : SassOutputStyle.values()) {
             if (sassOutputStyle.getIntValue() == outputStyle) {
                 this.outputStyle = sassOutputStyle;
                 break;
@@ -152,21 +151,23 @@ public class SassTask extends Task {
         if (outputPath != null) {
             try {
                 if (!outputPath.exists()) {
-                    outputPath.mkdirs();
+                    if (!outputPath.mkdirs()) {
+                        throw new BuildException(format("Could not create output path: {0}", outputPath.getCanonicalPath()));
+                    }
                 }
                 String filename = inputFile.getName();
                 if (filename.indexOf(".") > 0) {
                     filename = filename.substring(0, filename.lastIndexOf("."));
                 }
                 filename += OUTPUT_EXTENSION;
-                Path output = outputPath.toPath().resolve(filename);
-                File outputFile = output.toFile();
+                final Path output = outputPath.toPath().resolve(filename);
+                final File outputFile = output.toFile();
                 if (!outputFile.exists()) {
                     result = new FileOutputStream(outputFile);
                 } else {
-                    System.out.println("File already exists " + outputFile.getCanonicalPath());
+                    this.log(format("File already exists: {0} ", outputFile.getCanonicalPath()));
                 }
-            } catch (IOException ex) {
+            } catch (final IOException ex) {
                 throw new BuildException(ex);
             }
         } else {
@@ -181,9 +182,9 @@ public class SassTask extends Task {
      * @return A collection of include directories.
      */
     private Collection<Path> getIncludeDirs() {
-        Collection<Path> includes = new HashSet<>();
+        final Collection<Path> includes = new HashSet<>();
         for (org.apache.tools.ant.types.Path path : paths) {
-            String[] pathElements = path.list();
+            final String[] pathElements = path.list();
             for (String pathElement : pathElements) {
                 includes.add(Paths.get(pathElement));
             }
@@ -208,13 +209,13 @@ public class SassTask extends Task {
                         }
                     });
                 } else {
-                    files = new File[]{in};
+                    files = new File[]{ in };
                 }
             } else {
-                throw new BuildException("Cannot find " + in.getAbsolutePath());
+                throw new BuildException(format("Cannot find \"{0}\".", in.getAbsolutePath()));
             }
         } else {
-            throw new BuildException("'in' must be set");
+            throw new BuildException("\"in\" must be set");
         }
         return files;
     }
@@ -261,28 +262,29 @@ public class SassTask extends Task {
 
     @Override
     public void execute() throws BuildException {
-        File[] inputFiles = getInputFiles();
-        for (File inputFile : inputFiles) {
+        final File[] inputFiles = getInputFiles();
+        for (final File inputFile : inputFiles) {
             if (inputFile.exists()) {
                 if (inputFile.canRead()) {
-                    SassContext context = SassFileContext.create(inputFile.toPath());
-                    setOptions(context.getOptions());
+                    final SassContext context = SassFileContext.create(inputFile.toPath());
+                    this.setOptions(context.getOptions());
                     try {
-                        try (OutputStream outputStream = getOutput(inputFile)) {
+                        try (final OutputStream outputStream = getOutput(inputFile)) {
                             if (outputStream != null) {
-                                System.out.println("Compiling " + inputFile.getCanonicalPath());
+                                this.log(format("Compiling \"{0}\"...", inputFile.getCanonicalPath()));
                                 context.compile(outputStream);
                             }
                         }
-                    } catch (SassCompilationException | IOException ex) {
+                    } catch (final SassCompilationException | IOException ex) {
                         throw new BuildException(ex);
                     }
                 } else {
-                    throw new BuildException("Could not read " + inputFile.getAbsolutePath());
+                    throw new BuildException(format("Could not read \"{0}\".", inputFile.getAbsolutePath()));
                 }
             } else {
-                throw new BuildException("Could not find " + inputFile.getAbsolutePath());
+                throw new BuildException(format("Could not find \"{0}\".", inputFile.getAbsolutePath()));
             }
         }
     }
+
 }
